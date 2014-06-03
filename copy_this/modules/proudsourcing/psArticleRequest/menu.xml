@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ISO-8859-15"?>
+<OX>
+    <OXMENU id="NAVIGATION_PSMODULE">
+        <MAINMENU id="psarticlerequest">
+            <SUBMENU id="psarticlerequest_request" cl="psarticlerequest_admin_main"  list="psarticlerequest_admin_list" >
+            	<TAB id="tbclpsarticlerequest_detail" cl="psarticlerequest_admin_tab_detail" />
+            </SUBMENU>
+        </MAINMENU>
+    </OXMENU>
+</OX>

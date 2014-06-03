@@ -1,0 +1,7 @@
+[{$smarty.block.parent}]
+[{block name="details_tabs_psarticlequest"}]
+    [{if $oDetailsProduct->getStockStatus() == -1}]
+        [{capture append="tabs"}]<a href="#ps_article_request">[{oxmultilang ident="PS_ARTICLEREQUEST_TAB_LINK_TITLE"}]</a>[{/capture}]
+        [{capture append="tabsContent"}]<div id="ps_article_request">[{include file="form/ps_article_request_form.tpl"}]</div>[{/capture}]
+    [{/if}]
+[{/block}]
