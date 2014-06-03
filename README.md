@@ -13,14 +13,14 @@ Features
 Installation
 
 	1. copy content from copy_this folder into your shop root
-	2. update database (proudsourcing/psArticleRequest/sql/install.sql) and update views (shop admin --> service --> tools)
-	3. activate module psArticleRequest in shop admin
+	2. update database (execute copy_this/proudsourcing/psArticleRequest/sql/install.sql) 
+	3. update views (shop admin --> service --> tools)
+	4. activate module psArticleRequest in shop admin
 
 
 Screenshot
 
 ![psArticleRequest](https://raw.github.com/proudcommerce/psArticleRequest/master/psArticleRequest_screenshot.png)
-
 ![psArticleRequest](https://raw.github.com/proudcommerce/psArticleRequest/master/psArticleRequest_screenshot_admin.png)
 
 
