@@ -75,7 +75,7 @@ class psarticlerequest_admin_tab_detail extends oxAdminDetails
 	 */
 	public function send()
     {
-		$aParams = oxConfig::getParameter( "editval");
+		$aParams = oxRegistry::getConfig()->getRequestParameter("editval");
 		//If message exist, send it to customer.
 		if ( isset( $aParams['psarticlerequest__oxlongdesc'] ) && $aParams['psarticlerequest__oxlongdesc'] ) {
 			$soxId = $this->getEditObjectId();

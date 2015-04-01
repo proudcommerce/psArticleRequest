@@ -39,6 +39,6 @@ $aModule = array(
     	'psarticlerequest_admin_tab_detail.tpl' 		=>  'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_tab_detail.tpl',
     ),
     'blocks' => array(
-        array('template' => 'page/details/inc/tabs.tpl', 'block'=>'details_tabs_media', 'file'=>'/views/blocks/details_tabs_media.tpl', 'position'=>100),
+        array('template' => 'page/details/inc/tabs.tpl', 'block'=>'details_tabs_media', 'file'=>'/application/views/blocks/details_tabs_media.tpl', 'position'=>100),
     ),
 );
