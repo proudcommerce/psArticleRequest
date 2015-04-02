@@ -17,7 +17,9 @@ class psarticlerequest_admin_tab_detail extends oxAdminDetails
 	public function render()
     {
 		$myConfig = $this->getConfig();
-		
+
+        $this->addTplParam('shopid', oxRegistry::getConfig()->getShopId());
+
 		$soxId = $this->getEditObjectId();
 		if ( $soxId != "-1" && isset( $soxId)) {
 				$oPsArticleRequest = oxNew( "psarticlerequest" );
@@ -45,7 +47,7 @@ class psarticlerequest_admin_tab_detail extends oxAdminDetails
 				$this->_aViewData["edit_lang"] = $aLanguages[$iLang];
 				
 				$oLetter = new stdClass();
-				$aParams = oxConfig::getParameter( "editval");
+				$aParams = oxRegistry::getConfig()->getRequestParameter( "editval");
 
 				//Get value from either admin front-end or template parse result.
 				if ( isset( $aParams['psarticlerequest__oxlongdesc'] ) && $aParams['psarticlerequest__oxlongdesc'] ) {

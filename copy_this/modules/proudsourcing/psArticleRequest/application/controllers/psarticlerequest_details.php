@@ -18,23 +18,25 @@ class psArticleRequest_details extends psArticleRequest_details_parent
         $myUtils  = oxRegistry::getUtils();
 
         //control captcha
-        $sMac     = oxConfig::getParameter( 'c_mac' );
-        $sMacHash = oxConfig::getParameter( 'c_mach' );
+        $sMac     = oxRegistry::getConfig()->getRequestParameter( 'c_mac' );
+        $sMacHash = oxRegistry::getConfig()->getRequestParameter( 'c_mach' );
         $oCaptcha = $this->getCaptcha();
         if ( !$oCaptcha->pass( $sMac, $sMacHash ) ) {
             oxRegistry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_WRONG_VERIFICATION_CODE');
             return;
         }
 
-        $aParams = oxConfig::getParameter( 'pa' );
-        if ( !isset( $aParams['email'] ) || !$myUtils->isValidEmail( $aParams['email'] ) ) {
+        /** @var oxMailValidator $oMailValidator */
+        $oMailValidator = oxNew('oxMailValidator');
+        $aParams = oxRegistry::getConfig()->getRequestParameter( 'pa' );
+        if ( !isset( $aParams['email'] ) || !$oMailValidator->isValidEmail( $aParams['email'] ) ) {
             oxRegistry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_INVALID_EMAIL');
             return;
         }
         $aParams['aid'] = $this->getProduct()->getId();
 
         $oArticleRequest = oxNew( "psarticlerequest" );
-        $oArticleRequest->psarticlerequest__oxuserid = new oxField( oxSession::getVar( 'usr' ));
+        $oArticleRequest->psarticlerequest__oxuserid = new oxField( oxRegistry::getSession()->getVariable( 'usr' ));
         $oArticleRequest->psarticlerequest__oxemail  = new oxField( $aParams['email']);
         $oArticleRequest->psarticlerequest__oxartid  = new oxField( $aParams['aid']);
         $oArticleRequest->psarticlerequest__oxshopid = new oxField( $myConfig->getShopId());

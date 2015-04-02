@@ -26,6 +26,7 @@ $aLang = array(
 		'PS_ARTICLEREQUEST_STOCK'						=> "Aktueller Lagerbestand",
 		'PS_ARTICLE_REQUEST_DETAIL_EMAILSEND'			=> "Nachricht versenden",
 
+        'PS_ARTICLEREQUEST_SEND_SUBJECT_AV'             => 'Anfrage',
         'PS_ARTICLE_REQUEST_MAIL_AV1'                   => 'Wir m&ouml;chten Sie dar&uuml;ber informieren, dass der Artikel',
         'PS_ARTICLE_REQUEST_MAIL_AV2'                   => 'wieder lieferbar ist.',
         'PS_ARTICLE_REQUEST_MAIL_AV3'                   => 'Sie hatten sich am',
