@@ -1,11 +1,9 @@
 [{include file="headitem.tpl" title="GENERAL_ADMIN_TITLE"|oxmultilangassign}]
 
-
-  [{ if $shopid != "oxbaseshop" }]
-    [{assign var="readonly" value="readonly disabled"}]
-  [{else}]
-    [{assign var="readonly" value=""}]
-  [{/if}]
+[{assign var="readonly" value=""}]
+[{if $shopid != "oxbaseshop" && $shopid != "1" }]
+    [{assign var="readonly" value="readonly=\"readonly\" disabled=\"disabled\""}]
+[{/if}]
 
 <script type="text/javascript">
 <!--
