@@ -9,5 +9,6 @@
 <br><br>
 
 [{ oxmultilang ident="PS_ARTICLE_REQUEST_MAIL2" }] <b>[{$product->oxarticles__oxtitle->value}]</b> [{ oxmultilang ident="PS_ARTICLE_REQUEST_MAIL3" }]
+<br><br>
 
 [{include file="email/html/footer.tpl"}]

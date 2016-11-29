@@ -31,7 +31,6 @@ class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
 		$iRequestLang = $oArticleRequest->psarticlerequest__oxlang->value;
 		
 		$oArticle = oxNew( "oxarticle" );
-		//$oArticle->setSkipAbPrice( true );
 		$oArticle->loadInLang( $iRequestLang, $aParams['aid'] );
 		$oLang = oxRegistry::getLang();
 		
@@ -49,44 +48,50 @@ class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
 
         return $this->send();
 	}
-	
+
 	public function sendArticleRequestToCustomer( $sRecipient, $oArticleRequest, $sBody = null, $sReturnMailBody = null )
 	{
+        $myConfig = $this->getConfig();
 		$this->_clearMailer();
-	
-		$oViewConfig = oxNew("oxViewConfig");
-		$oShop = $this->_getShop();
+
 		$iRequestLang = $oArticleRequest->psarticlerequest__oxlang->value;
-		$oLang = oxRegistry::getLang();
-		
-		if ( $oShop->getId() != $oArticleRequest->psarticlerequest__oxshopid->value) {
-			$oShop = oxNew( "oxshop" );
-			$oShop->load( $oArticleRequest->psarticlerequest__oxshopid->value);
-			$this->setShop( $oShop );
-		}
-	
-		//set mail params (from, fromName, smtp)
-		$this->_setMailParams( $oShop );
-	
-		// create messages
-		$oSmarty = $this->_getSmarty();
-	
-		$oArticle =  $oArticleRequest->getArticle() ;
-		$this->setViewData( "product", $oArticle);
-		$this->setViewData( "oArticleRequest", $oArticleRequest );
-	
-		// Process view data array through oxoutput processor
-		$this->_processViewArray();
+        $oShop = $this->_getShop( $iRequestLang );
+
+        //set mail params (from, fromName, smtp)
+        $this->_setMailParams( $oShop );
+
+        //create messages
+        $oLang = oxRegistry::getLang();
+        $oSmarty = $this->_getSmarty();
+        $this->setViewData( "shopTemplateDir", $myConfig->getTemplateDir(false) );
+        $oArticle =  $oArticleRequest->getArticle() ;
+        $this->setViewData( "product", $oArticle);
+        $this->setViewData( "oArticleRequest", $oArticleRequest );
+
+        // Process view data array through oxOutput processor
+        $this->_processViewArray();
+
+        $aStore['INCLUDE_ANY'] = $oSmarty->security_settings['INCLUDE_ANY'];
+        //V send email in order language
+        $iOldTplLang = $oLang->getTplLanguage();
+        $iOldBaseLang = $oLang->getTplLanguage();
+        $oLang->setTplLanguage( $iRequestLang );
+        $oLang->setBaseLanguage( $iRequestLang );
+
+        $oSmarty->security_settings['INCLUDE_ANY'] = true;
+        // force non admin to get correct paths (tpl, img)
+        $myConfig->setAdminMode( false );
+
+        $this->setBody( $oSmarty->fetch( $this->_sArticleRequestCustomerTemplate ) );
+
+        $myConfig->setAdminMode( true );
+        $oLang->setTplLanguage( $iOldTplLang );
+        $oLang->setBaseLanguage( $iOldBaseLang );
+        // set it back
+        $oSmarty->security_settings['INCLUDE_ANY'] = $aStore['INCLUDE_ANY'] ;
 	
 		$this->setRecipient( $sRecipient, $sRecipient );
         $this->setSubject($oLang->translateString( 'PS_ARTICLEREQUEST_SEND_SUBJECT_AV', $iRequestLang ) . " " . $oArticle->oxarticles__oxtitle->value );
-		
-		if ( $sBody === null )
-        {
-			$sBody = $oSmarty->fetch( $this->_sArticleRequestCustomerTemplate );
-		}
-	
-		$this->setBody( $sBody );
 	
 		$this->addAddress( $sRecipient, $sRecipient );
 		$this->setReplyTo( $oShop->oxshops__oxorderemail->value, $oShop->oxshops__oxname->getRawValue() );

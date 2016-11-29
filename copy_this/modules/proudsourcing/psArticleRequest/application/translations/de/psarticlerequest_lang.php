@@ -27,4 +27,9 @@ $aLang = array(
         'PS_ARTICLE_REQUEST_MAIL2'                  => 'Sobald der Artikel',
         'PS_ARTICLE_REQUEST_MAIL3'                  => 'wieder lieferbar ist, werden wir Sie umgehend informieren.',
 
+    'PS_ARTICLE_REQUEST_MAIL_AV1'                   => 'Wir m&ouml;chten Sie dar&uuml;ber informieren, dass der Artikel',
+    'PS_ARTICLE_REQUEST_MAIL_AV2'                   => 'wieder lieferbar ist.',
+    'PS_ARTICLE_REQUEST_MAIL_AV3'                   => 'Sie hatten sich am',
+    'PS_ARTICLE_REQUEST_MAIL_AV4'                   => 'eingetragen, um eine Nachricht zu erhalten, sobald das Produkt wieder verf&uuml;gbar ist.',
+
 );
