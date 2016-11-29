@@ -2,7 +2,7 @@ psArticleRequest
 =========
 
 Notification tool if non-deliverable item is back in stock.
-Free Module for OXID eShop.
+Free module for OXID eshop 4.7, 4.8, 4.9 and 4.10.
 
 Features
 
@@ -13,10 +13,15 @@ Features
 Installation
 
 	1. copy content from copy_this folder into your shop root
-	2. update database (execute copy_this/proudsourcing/psArticleRequest/sql/install.sql) 
-	3. update views (shop admin --> service --> tools)
-	4. activate module psArticleRequest in shop admin
+	2. activate module psArticleRequest in shop admin
 
+
+Changelog
+
+	2016-11-29	2.0.0	Ready for OXID 4.10/5.3, New feature: auto notification for registered users
+	2015-04-02	1.1.0	Ready for OXID 4.9/5.2
+	2014-06-03	1.0.0	Module release (OXID 4.7/4.8)
+	
 
 Screenshot
 
@@ -42,5 +47,5 @@ License
 
 Copyright
 
-	Proud Sourcing GmbH 2014
-	www.proudcommerce.com
+	Proud Sourcing GmbH 2016
+	www.proudcommerce.com / www.proudsourcing.de

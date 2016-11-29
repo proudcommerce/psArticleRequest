@@ -5,19 +5,27 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @copyright (c) Proud Sourcing GmbH | 2014
+ * @copyright (c) Proud Sourcing GmbH | 2016
  * @link www.proudcommerce.com
  * @package psArticleRequest
- * @version 1.0.0
+ * @version 2.0.0
  **/
 $sLangName  = "Deutsch";
 
 $aLang = array(
 		'charset'                                  		=> 'UTF-8',
 
+		'NAVIGATION_PSMODULE'						    => 'Proud Sourcing Module',
 		'psarticlerequest'						        => 'psArticleRequest',
+
 		'psarticlerequest_request'	                    => '&Uuml;bersicht',
-		'tbclpsarticlerequest_detail'                   => 'Stamm',
+		'tbclpsarticlerequest_detail'	                => 'Stamm',
+
+        'SHOP_MODULE_GROUP_psArticleRequest_config'     => 'Allgemein',
+        'SHOP_MODULE_psArticleRequest_stockinfo'        => 'Lagerbestandsinfo',
+        'SHOP_MODULE_psArticleRequest_stockinfo_man'    => 'manuell',
+        'SHOP_MODULE_psArticleRequest_stockinfo_auto1'  => 'wenn wieder Lagerbestand (erste Anfragen)',
+        'SHOP_MODULE_psArticleRequest_stockinfo_auto2'  => 'wenn wieder Lagerbestand (alle Anfragen)',
 		'PS_ARTICLEREQUEST_NAME'						=> "Kunde",
 		'PS_ARTICLEREQUEST_CONFIRMATION_DATE'			=> "eingetragen am",
 		'PS_ARTICLEREQUEST_SHIPPING_DATE'				=> "informiert am",
@@ -25,8 +33,8 @@ $aLang = array(
 		'PS_ARTICLEREQUEST_EMAIL'						=> "eMail-Adresse",
 		'PS_ARTICLEREQUEST_STOCK'						=> "Aktueller Lagerbestand",
 		'PS_ARTICLE_REQUEST_DETAIL_EMAILSEND'			=> "Nachricht versenden",
-		'PS_ARTICLE_REQUEST_LIST_MENUITEM'			=> "Verfügbarkeitsanfragen",
-		'PS_ARTICLE_REQUEST_LIST_MENUSUBITEM'   		=> "",
+		'PS_ARTICLE_REQUEST_LIST_MENUITEM'			    => "Verfügbarkeitsanfragen",
+		'PS_ARTICLE_REQUEST_LIST_MENUSUBITEM'   		=> "Verfügbarkeitsanfrage",
 
         'PS_ARTICLEREQUEST_SEND_SUBJECT_AV'             => 'Anfrage',
         'PS_ARTICLE_REQUEST_MAIL_AV1'                   => 'Wir m&ouml;chten Sie dar&uuml;ber informieren, dass der Artikel',

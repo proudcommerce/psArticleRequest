@@ -5,10 +5,10 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @copyright (c) Proud Sourcing GmbH | 2014
+ * @copyright (c) Proud Sourcing GmbH | 2016
  * @link www.proudcommerce.com
  * @package psArticleRequest
- * @version 1.0.0
+ * @version 2.0.0
  **/
 class psarticlerequest_admin_tab_detail extends oxAdminDetails
 {
