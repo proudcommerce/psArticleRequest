@@ -15,13 +15,13 @@ Installation
 	1. copy content from copy_this folder into your shop root
 	2. activate module psArticleRequest in shop admin
 
+Tip: Use the [OXID module connector](https://github.com/OXIDprojects/OXID-Module-Connector) to install this module.
 
 Changelog
 
 	2016-11-29	2.0.0	Ready for OXID 4.10/5.3, New feature: auto notification for registered users
 	2015-04-02	1.1.0	Ready for OXID 4.9/5.2
 	2014-06-03	1.0.0	Module release (OXID 4.7/4.8)
-	
 
 Screenshot
 
