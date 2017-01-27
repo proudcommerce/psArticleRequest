@@ -8,7 +8,8 @@ Features
 
 	If an product is out auf stock, new tab will be displayed on product details page.
 	User can leave his email adress. If Product is available again, shop owner can send an
-	email (using shop admin) with product availability information.
+	email (using shop admin) with product availability information. This email can be send
+	manually or with cronjob to the first adopters or all saved article requests.
 
 Installation
 
