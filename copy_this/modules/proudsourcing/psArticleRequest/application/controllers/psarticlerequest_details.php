@@ -36,7 +36,7 @@ class psArticleRequest_details extends psArticleRequest_details_parent
             }
         } else {
             // checking email address
-            if ( !oxRegistry::getUtils()->isValidEmail( $aParams['oxuser__oxusername'] ) ) {
+            if ( !oxRegistry::getUtils()->isValidEmail( $aParams['email'] ) ) {
                 oxRegistry::get("oxUtilsView")->addErrorToDisplay( 'ERROR_MESSAGE_INPUT_NOVALIDEMAIL' );
                 return false;
 	    }
