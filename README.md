@@ -20,6 +20,7 @@ Tip: Use the [OXID module connector](https://github.com/OXIDprojects/OXID-Module
 
 Changelog
 
+	2017-02-02  2.0.1   Fix email validation for older versions
 	2016-11-29	2.0.0	Ready for OXID 4.10/5.3, New feature: auto notification for registered users
 	2015-04-02	1.1.0	Ready for OXID 4.9/5.2
 	2014-06-03	1.0.0	Module release (OXID 4.7/4.8)

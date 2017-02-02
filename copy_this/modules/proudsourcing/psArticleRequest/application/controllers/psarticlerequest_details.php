@@ -26,13 +26,21 @@ class psArticleRequest_details extends psArticleRequest_details_parent
             return;
         }
 
-        /** @var oxMailValidator $oMailValidator */
-        $oMailValidator = oxNew('oxMailValidator');
         $aParams = oxRegistry::getConfig()->getRequestParameter( 'pa' );
-        if ( !isset( $aParams['email'] ) || !$oMailValidator->isValidEmail( $aParams['email'] ) ) {
-            oxRegistry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_INVALID_EMAIL');
-            return;
+        if(oxRegistry::getConfig()->getActiveShop()->oxshops__oxversion->value >= 4.9) {
+            /** @var oxMailValidator $oMailValidator */
+            $oMailValidator = oxNew('oxMailValidator');
+            if ( !isset( $aParams['email'] ) || !$oMailValidator->isValidEmail( $aParams['email'] ) ) {
+                oxRegistry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_INVALID_EMAIL');
+                return;
+            }
+        } else {
+            // checking email address
+            if ( !oxRegistry::getUtils()->isValidEmail( $aParams['oxuser__oxusername'] ) ) {
+                oxRegistry::get("oxUtilsView")->addErrorToDisplay( 'ERROR_MESSAGE_INPUT_NOVALIDEMAIL' );
+                return false;
         }
+
         $aParams['aid'] = $this->getProduct()->getId();
 
         $oArticleRequest = oxNew( "psarticlerequest" );
