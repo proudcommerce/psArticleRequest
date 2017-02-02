@@ -39,6 +39,7 @@ class psArticleRequest_details extends psArticleRequest_details_parent
             if ( !oxRegistry::getUtils()->isValidEmail( $aParams['oxuser__oxusername'] ) ) {
                 oxRegistry::get("oxUtilsView")->addErrorToDisplay( 'ERROR_MESSAGE_INPUT_NOVALIDEMAIL' );
                 return false;
+	    }
         }
 
         $aParams['aid'] = $this->getProduct()->getId();
