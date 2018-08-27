@@ -5,10 +5,10 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @copyright (c) Proud Sourcing GmbH | 2016
+ * @copyright (c) Proud Sourcing GmbH | 2018
  * @link www.proudcommerce.com
  * @package psArticleRequest
- * @version 2.0.0
+ * @version 2.1.0
  **/
 
 /**
@@ -33,46 +33,49 @@ $psModuleDesc_en = '
 /**
  * Module information
  */
-$aModule = array(
-    'id'           => 'psArticleRequest',
-    'title'        => 'psArticleRequest',
-    'description'  => array(
+$aModule = [
+    'id'          => 'psArticleRequest',
+    'title'       => 'psArticleRequest',
+    'description' => [
         'de' => $psModuleDesc_de,
         'en' => $psModuleDesc_en,
-    ),
-    'thumbnail'    => 'logo_pc-os.jpg',
-    'version'      => '2.0.1',
-    'author'       => 'Proud Sourcing GmbH',
-    'url'          => 'http://www.proudcommerce.com/',
-    'email'        => 'support@proudcommerce.com',
-	'extend'       => array(
-			'article_stock' => 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_article_stock',
-			'details'       => 'proudsourcing/psArticleRequest/application/controllers/psarticlerequest_details',
-			'oxemail'       => 'proudsourcing/psArticleRequest/core/psarticlerequest_oxemail',
-	),
-    'files' => array(
-        'psarticlerequest'                      => 'proudsourcing/psArticleRequest/application/models/psarticlerequest.php'	,
-        'psarticlerequest_module'               => 'proudsourcing/psArticleRequest/core/psarticlerequest_module.php',
-        'psarticlerequest_admin_main' 			=> 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_admin_main.php',
-        'psarticlerequest_admin_list' 			=> 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_admin_list.php',
-        'psarticlerequest_admin_tab_detail' 	=> 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_admin_tab_detail.php'
-    ),
-    'templates' => array(
-        'form/ps_article_request_form.tpl'              =>  'proudsourcing/psArticleRequest/application/views/flow/tpl/form/ps_article_request_form.tpl',
-    	'email/ps_article_request_notification.tpl'	 	=>  'proudsourcing/psArticleRequest/application/views/flow/tpl/email/ps_article_request_notification.tpl',
-    	'email/ps_article_request_customer_email.tpl' 	=>  'proudsourcing/psArticleRequest/application/views/flow/tpl/email/ps_article_request_customer_email.tpl',
-    	'psarticlerequest_admin_main.tpl' 				=>  'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_main.tpl',
-    	'psarticlerequest_admin_list.tpl' 				=>  'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_list.tpl',
-    	'psarticlerequest_admin_tab_detail.tpl' 		=>  'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_tab_detail.tpl',
-    ),
-    'blocks' => array(
-        array('template' => 'page/details/inc/tabs.tpl', 'block'=>'details_tabs_media', 'file'=>'/application/views/blocks/details_tabs_media.tpl', 'position'=>100),
-    ),
-    'settings' => array(
-        array('group' => 'psArticleRequest_config', 'name' => 'psArticleRequest_stockinfo' , 'type' => 'select', 'value' => 'man', 'position' => 15,  'constraints' => 'man|auto1|auto2'),
-    ),
-    'events'      => array(
+    ],
+    'thumbnail'   => 'logo_pc-os.jpg',
+    'version'     => '2.1.0',
+    'author'      => 'Proud Sourcing GmbH',
+    'url'         => 'http://www.proudcommerce.com/',
+    'email'       => 'support@proudcommerce.com',
+    'extend'      => [
+        'article_stock' => 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_article_stock',
+        'details'       => 'proudsourcing/psArticleRequest/application/controllers/psarticlerequest_details',
+        'oxemail'       => 'proudsourcing/psArticleRequest/core/psarticlerequest_oxemail',
+    ],
+    'files'       => [
+        'psarticlerequest'                  => 'proudsourcing/psArticleRequest/application/models/psarticlerequest.php',
+        'psarticlerequest_module'           => 'proudsourcing/psArticleRequest/core/psarticlerequest_module.php',
+        'psarticlerequest_cron'             => 'proudsourcing/psArticleRequest/application/controllers/psarticlerequest_cron.php',
+        'psarticlerequest_admin_main'       => 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_admin_main.php',
+        'psarticlerequest_admin_list'       => 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_admin_list.php',
+        'psarticlerequest_admin_tab_detail' => 'proudsourcing/psArticleRequest/application/controllers/admin/psarticlerequest_admin_tab_detail.php'
+    ],
+    'templates'   => [
+        'form/ps_article_request_form.tpl'            => 'proudsourcing/psArticleRequest/application/views/flow/tpl/form/ps_article_request_form.tpl',
+        'email/ps_article_request_notification.tpl'   => 'proudsourcing/psArticleRequest/application/views/flow/tpl/email/ps_article_request_notification.tpl',
+        'email/ps_article_request_customer_email.tpl' => 'proudsourcing/psArticleRequest/application/views/flow/tpl/email/ps_article_request_customer_email.tpl',
+        'psarticlerequest_admin_main.tpl'             => 'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_main.tpl',
+        'psarticlerequest_admin_list.tpl'             => 'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_list.tpl',
+        'psarticlerequest_admin_tab_detail.tpl'       => 'proudsourcing/psArticleRequest/application/views/admin/tpl/psarticlerequest_admin_tab_detail.tpl',
+    ],
+    'blocks'      => [
+        ['template' => 'page/details/inc/tabs.tpl', 'block' => 'details_tabs_media', 'file' => '/application/views/blocks/details_tabs_media.tpl', 'position' => 100],
+    ],
+    'settings'    => [
+        ['group' => 'psArticleRequest_config', 'name' => 'psArticleRequest_stockinfo', 'type' => 'select', 'value' => 'man', 'position' => 10, 'constraints' => 'man|auto1|auto2'],
+        ['group' => 'psArticleRequest_config', 'name' => 'psArticleRequest_cronkey', 'type' => 'str', 'value' => md5('psArticleRequest' . time()), 'position' => 20],
+        ['group' => 'psArticleRequest_config', 'name' => 'psArticleRequest_minstock', 'type' => 'str', 'value' => 1, 'position' => 30],
+    ],
+    'events'      => [
         'onActivate'   => 'psarticlerequest_module::onActivate',
         'onDeactivate' => 'psarticlerequest_module::onDeactivate',
-    ),
-);
+    ],
+];

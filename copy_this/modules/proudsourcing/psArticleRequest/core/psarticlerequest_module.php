@@ -1,14 +1,15 @@
 <?php
+
 /**
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @copyright (c) Proud Sourcing GmbH | 2016
+ * @copyright (c) Proud Sourcing GmbH | 2018
  * @link www.proudcommerce.com
  * @package psArticleRequest
- * @version 2.0.0
+ * @version 2.1.0
  **/
 class psarticlerequest_module extends oxSuperCfg
 {
@@ -42,32 +43,32 @@ class psarticlerequest_module extends oxSuperCfg
      * Install/uninstall event.
      * Executes SQL queries form a file.
      *
-     * @param string $sSqlFile      SQL file located in module setup folder (usually install.sql or uninstall.sql).
+     * @param string $sSqlFile SQL file located in module setup folder (usually install.sql or uninstall.sql).
      * @param string $sFailureError An error message to show on failure.
      * @return bool
      */
     protected static function _dbEvent($sSqlFile = "", $sAction = "", $sDbCheck = "")
     {
-        if($sSqlFile != "") {
+        if ($sSqlFile != "") {
             try {
-                $oDb  = oxDb::getDb();
+                $oDb = oxDb::getDb();
 
-                if(!empty($sDbCheck)) {
+                if (!empty($sDbCheck)) {
                     $aDbCheck = explode(";", $sDbCheck);
-                    if(count($aDbCheck) > 0 && self::dbColumnExist($aDbCheck[0], $aDbCheck[1])) {
+                    if (count($aDbCheck) > 0 && self::dbColumnExist($aDbCheck[0], $aDbCheck[1])) {
                         return true;
                     }
                 }
 
-                $sSql = file_get_contents(dirname(__FILE__) . '/../setup/sql/' . (string) $sSqlFile);
-                $aSql = (array) explode(';', $sSql);
+                $sSql = file_get_contents(dirname(__FILE__) . '/../setup/sql/' . (string)$sSqlFile);
+                $aSql = (array)explode(';', $sSql);
                 foreach ($aSql as $sQuery) {
                     if (!empty($sQuery)) {
                         $oDb->execute($sQuery);
                     }
                 }
             } catch (Exception $ex) {
-                error_log($sAction." failed: " . $ex->getMessage());
+                error_log($sAction . " failed: " . $ex->getMessage());
             }
 
             /** @var oxDbMetaDataHandler $oDbHandler */
@@ -86,14 +87,14 @@ class psarticlerequest_module extends oxSuperCfg
      * @param $sColumn
      * @return string
      */
-    public static function dbColumnExist($sTable, $sColumn) {
+    public static function dbColumnExist($sTable, $sColumn)
+    {
         $oDb = oxDb::getDb();
         $sDbName = oxRegistry::getConfig()->getConfigParam('dbName');
         try {
             $sSql = "SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND COLUMN_NAME = ?";
-            $blRet = $oDb->getOne($sSql, array($sDbName, $sTable, $sColumn));
-        }
-        catch(Exception $oEx) {
+            $blRet = $oDb->getOne($sSql, [$sDbName, $sTable, $sColumn]);
+        } catch (Exception $oEx) {
             $blRet = false;
         }
         return $blRet;
@@ -131,7 +132,7 @@ class psarticlerequest_module extends oxSuperCfg
      */
     protected static function _getFolderToClear($sClearFolderPath = '')
     {
-        $sTempFolderPath = (string) oxRegistry::getConfig()->getConfigParam('sCompileDir');
+        $sTempFolderPath = (string)oxRegistry::getConfig()->getConfigParam('sCompileDir');
         if (!empty($sClearFolderPath) and (strpos($sClearFolderPath, $sTempFolderPath) !== false)) {
             $sFolderPath = $sClearFolderPath;
         } else {
@@ -149,7 +150,7 @@ class psarticlerequest_module extends oxSuperCfg
      */
     protected static function _clear($sFileName, $sFilePath)
     {
-        if (!in_array($sFileName, array('.', '..', '.gitkeep', '.htaccess'))) {
+        if (!in_array($sFileName, ['.', '..', '.gitkeep', '.htaccess'])) {
             if (is_file($sFilePath)) {
                 @unlink($sFilePath);
             } else {

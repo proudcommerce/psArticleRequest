@@ -5,10 +5,10 @@
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
  *
- * @copyright (c) Proud Sourcing GmbH | 2016
+ * @copyright (c) Proud Sourcing GmbH | 2018
  * @link www.proudcommerce.com
  * @package psArticleRequest
- * @version 2.0.0
+ * @version 2.1.0
  **/
 class psArticleRequest_details extends psArticleRequest_details_parent
 {

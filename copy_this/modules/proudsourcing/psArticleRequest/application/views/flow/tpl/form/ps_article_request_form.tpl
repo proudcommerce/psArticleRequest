@@ -1,52 +1,49 @@
-[{oxscript include="js/libs/jqBootstrapValidation.min.js" priority=10}]
-[{oxscript add="$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();"}]
-
+[{* tabsl angepasst *}]
 <p>[{ oxmultilang ident="PS_ARTICLEREQUEST_WHEN_INFORM_TITLE" }]</p>
-
-<form class="form-horizontal" name="articlerequest" action="[{$oViewConf->getSslSelfLink()}]" method="post" role="form" novalidate="novalidate">
+[{oxscript include="js/widgets/oxinputvalidator.js" priority=10 }]
+[{oxscript add="$('form.js-oxValidate').oxInputValidator();"}]
+<form class="js-oxValidate" name="articlerequest" action="[{ $oViewConf->getSelfActionLink() }]" method="post">
     <div>
         [{ $oViewConf->getHiddenSid() }]
         [{ $oViewConf->getNavFormParams() }]
         <input type="hidden" name="cl" value="details">
         [{if $oDetailsProduct}]
-            <input type="hidden" name="anid" value="[{$oDetailsProduct->oxarticles__oxid->value}]">
+    <input type="hidden" name="anid" value="[{$oDetailsProduct->oxarticles__oxid->value}]">
         [{/if}]
         <input type="hidden" name="fnc" value="request_product">
         [{assign var="oCaptcha" value=$oView->getCaptcha() }]
         <input type="hidden" name="c_mach" value="[{$oCaptcha->getHash()}]"/>
     </div>
-
-    [{include file="message/inputvalidation.tpl" aErrors=$aErrors.oxuser__oxfname}]
-
-    <div class="form-group verify">
-        <div class="col-lg-10 controls">
-            <p>[{oxmultilang ident="PS_ARTICLEREQUEST_EMAIL"}]</p>
-            <input id="contactEmail" type="email" name="pa[email]"  size=70 maxlength=40 value="[{ if $editval.oxuser__oxusername }][{$editval.oxuser__oxusername}][{else}][{ $oxcmp_user->oxuser__oxusername->value }][{/if}]" class="form-control" required="required">
-        </div>
-    </div>
-
-    <div class="form-group verify">
-        <div class="col-lg-10 controls">
-            <p>[{oxmultilang ident="VERIFICATION_CODE"}]</p>
-            [{assign var="oCaptcha" value=$oView->getCaptcha()}]
-            <div class="input-group">
-                [{if $oCaptcha->isImageVisible()}]
-                <span class="input-group-addon">
-                        <img src="[{$oCaptcha->getImageUrl()}]" alt="">
-                    </span>
-                [{else}]
-                <span class="input-group-addon verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
-                [{/if}]
-                <input type="text" name="c_mac" value="" class="form-control" required="required">
-            </div>
-        </div>
-    </div>
-
-    <div class="form-group">
-        <div class="col-lg-10 controls">
-            <button class="btn btn-primary" type="submit">
-                <i class="fa fa-envelope"></i> [{oxmultilang ident="SEND"}]
-            </button>
-        </div>
-    </div>
+    <ul class="form">
+        <li>
+            <label class="req">[{ oxmultilang ident="PS_ARTICLEREQUEST_EMAIL" }]:</label>
+            <input class="js-oxValidate js-oxValidate_notEmpty js-oxValidate_email" type="text" name="pa[email]" value="[{ if $oxcmp_user }][{ $oxcmp_user->oxuser__oxusername->value }][{/if}]" size="20" maxlength="128">
+            <p class="oxValidateError">
+                <span class="js-oxError_notEmpty">[{ oxmultilang ident="EXCEPTION_INPUT_NOTALLFIELDS" }]</span>
+                <span class="js-oxError_email">[{ oxmultilang ident="EXCEPTION_INPUT_NOVALIDEMAIL" }]</span>
+            </p>
+        </li>
+        <li>
+            <label class="req">[{ oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]:</label>
+            [{if $oCaptcha->isImageVisible()}]
+                <img class="verificationCode" src="[{$oCaptcha->getImageUrl()}]" alt="[{ oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]">
+            [{else}]
+                <span class="verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
+            [{/if}]
+            <input class="js-oxValidate js-oxValidate_notEmpty" type="text" data-fieldsize="verify" name="c_mac" value="">
+            <p class="oxValidateError">
+                <span class="js-oxError_notEmpty">[{ oxmultilang ident="EXCEPTION_INPUT_NOTALLFIELDS" }]</span>
+            </p>
+        </li>
+        <li class="formNote">
+            <br>
+            [{ oxmultilang ident="COMPLETE_MARKED_FIELDS" }]
+            <br><br>
+            [{ oxmultilang ident="LF_FORM_DSGVO_INFO_SAVE" }]
+            <br><br>
+        </li>
+        <li class="formSubmit">
+            <button class="submitButton largeButton" type="submit">[{ oxmultilang ident="PS_ARTICLEREQUEST_SEND" }]</button>
+        </li>
+    </ul>
 </form>

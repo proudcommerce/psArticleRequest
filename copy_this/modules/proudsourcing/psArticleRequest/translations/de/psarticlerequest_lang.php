@@ -16,7 +16,7 @@ $aLang = [
     'charset' => 'UTF-8',
 
     'PS_ARTICLEREQUEST_TAB_LINK_TITLE'    => "Verf&uuml;gbarkeitsanfrage",
-    'PS_ARTICLEREQUEST_WHEN_INFORM_TITLE' => "Gerne benachrichtigen wir Sie, sobald der Artikel wieder verf&uuml;gbar ist. Bitte tragen Sie hierzu Ihre eMail-Adresse ein.",
+    'PS_ARTICLEREQUEST_WHEN_INFORM_TITLE' => "Gerne benachrichtigen wir Sie, sobald der Artikel wieder verf&uuml;gbar ist.",
     'PS_ARTICLEREQUEST_EMAIL'             => "eMail-Adresse",
     'PS_ARTICLEREQUEST_VERIFICATIONCODE'  => "Sicherheitscode",
     'PS_ARTICLEREQUEST_SEND'              => "Absenden",
