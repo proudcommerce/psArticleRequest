@@ -15,9 +15,9 @@ $sLangName = "Deutsch";
 $aLang = [
     'charset' => 'UTF-8',
 
-    'NAVIGATION_PSMODULE'                          => 'Proud Sourcing Module',
+    'NAVIGATION_PSMODULE'                          => 'ProudCommerce Module',
     'psarticlerequest'                             => 'psArticleRequest',
-    'psarticlerequest_request'                     => '&Uuml;bersicht',
+    'psarticlerequest_request'                     => 'übersicht',
     'tbclpsarticlerequest_detail'                  => 'Stamm',
     'SHOP_MODULE_GROUP_psArticleRequest_config'    => 'Allgemein',
     'SHOP_MODULE_psArticleRequest_stockinfo'       => 'Lagerbestandsinfo',
@@ -39,8 +39,9 @@ $aLang = [
     'PS_ARTICLE_REQUEST_LIST_MENUITEM'             => "Verfügbarkeitsanfragen",
     'PS_ARTICLE_REQUEST_LIST_MENUSUBITEM'          => "Verfügbarkeitsanfrage",
     'PS_ARTICLEREQUEST_SEND_SUBJECT_AV'            => 'Anfrage',
-    'PS_ARTICLE_REQUEST_MAIL_AV1'                  => 'Wir m&ouml;chten Sie dar&uuml;ber informieren, dass der Artikel',
+    'PS_ARTICLE_REQUEST_MAIL_AV1'                  => 'Wir möchten Sie darüber informieren, dass der Artikel',
     'PS_ARTICLE_REQUEST_MAIL_AV2'                  => 'wieder lieferbar ist.',
     'PS_ARTICLE_REQUEST_MAIL_AV3'                  => 'Sie hatten sich am',
-    'PS_ARTICLE_REQUEST_MAIL_AV4'                  => 'eingetragen, um eine Nachricht zu erhalten, sobald das Produkt wieder verf&uuml;gbar ist.',
+    'PS_ARTICLE_REQUEST_MAIL_AV4'                  => 'eingetragen, um eine Nachricht zu erhalten, sobald das Produkt wieder verfügbar ist.',
+    'PS_ARTICLE_REQUEST_MAILNOTSEND' => 'E-Mail konnte nicht verschickt werden.',
 ];

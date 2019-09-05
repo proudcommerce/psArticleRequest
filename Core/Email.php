@@ -1,17 +1,16 @@
 <?php
-
 /**
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @copyright (c) Proud Sourcing GmbH | 2018
- * @link www.proudcommerce.com
- * @package psArticleRequest
- * @version 2.1.0
- **/
-class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
+ * @package ProudCommerce
+ * @author Florian Palme <florian@proudcommerce.com>
+ */
+
+namespace ProudCommerce\ArticleRequest\Core;
+
+
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\Registry;
+
+class Email extends Email_parent
 {
     /**
      * Email template notification info
@@ -32,7 +31,6 @@ class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
      * @param $aParams
      * @param $oArticleRequest
      * @return mixed
-     * @throws oxSystemComponentException
      */
     public function sendArticleRequestNotification($aParams, $oArticleRequest)
     {
@@ -44,9 +42,10 @@ class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
 
         $iRequestLang = $oArticleRequest->psarticlerequest__oxlang->value;
 
-        $oArticle = oxNew("oxarticle");
+        /** @var Article $oArticle */
+        $oArticle = oxNew(Article::class);
         $oArticle->loadInLang($iRequestLang, $aParams['aid']);
-        $oLang = oxRegistry::getLang();
+        $oLang = Registry::getLang();
 
         // create messages
         $oSmarty = $this->_getSmarty();
@@ -84,7 +83,7 @@ class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
         $this->_setMailParams($oShop);
 
         //create messages
-        $oLang = oxRegistry::getLang();
+        $oLang = Registry::getLang();
         $oSmarty = $this->_getSmarty();
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
         $oArticle = $oArticleRequest->getArticle();
@@ -125,5 +124,4 @@ class psArticleRequest_oxEmail extends psArticleRequest_oxEmail_parent
             return $this->send();
         }
     }
-
 }

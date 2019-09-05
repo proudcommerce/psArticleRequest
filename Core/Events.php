@@ -1,21 +1,22 @@
 <?php
-
 /**
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @copyright (c) Proud Sourcing GmbH | 2018
- * @link www.proudcommerce.com
- * @package psArticleRequest
- * @version 2.1.0
- **/
-class psarticlerequest_module extends oxSuperCfg
+ * @package ProudCommerce
+ * @author Florian Palme <florian@proudcommerce.com>
+ */
+
+namespace ProudCommerce\ArticleRequest\Core;
+
+
+use OxidEsales\Eshop\Core\Base;
+use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\DbMetaDataHandler;
+use OxidEsales\Eshop\Core\Registry;
+
+class Events extends Base
 {
     /*
-     * Module id
-     */
+         * Module id
+         */
     public static $sModuleId = 'psArticleRequest';
 
 
@@ -44,14 +45,15 @@ class psarticlerequest_module extends oxSuperCfg
      * Executes SQL queries form a file.
      *
      * @param string $sSqlFile SQL file located in module setup folder (usually install.sql or uninstall.sql).
-     * @param string $sFailureError An error message to show on failure.
+     * @param string $sAction
+     * @param string $sDbCheck
      * @return bool
      */
     protected static function _dbEvent($sSqlFile = "", $sAction = "", $sDbCheck = "")
     {
         if ($sSqlFile != "") {
             try {
-                $oDb = oxDb::getDb();
+                $oDb = DatabaseProvider::getDb();
 
                 if (!empty($sDbCheck)) {
                     $aDbCheck = explode(";", $sDbCheck);
@@ -67,12 +69,12 @@ class psarticlerequest_module extends oxSuperCfg
                         $oDb->execute($sQuery);
                     }
                 }
-            } catch (Exception $ex) {
+            } catch (\Exception $ex) {
                 error_log($sAction . " failed: " . $ex->getMessage());
             }
 
-            /** @var oxDbMetaDataHandler $oDbHandler */
-            $oDbHandler = oxNew('oxDbMetaDataHandler');
+            /** @var DbMetaDataHandler $oDbHandler */
+            $oDbHandler = oxNew(DbMetaDataHandler::class);
             $oDbHandler->updateViews();
 
             self::clearTmp();
@@ -86,15 +88,16 @@ class psarticlerequest_module extends oxSuperCfg
      * @param $sTable
      * @param $sColumn
      * @return string
+     * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
      */
     public static function dbColumnExist($sTable, $sColumn)
     {
-        $oDb = oxDb::getDb();
-        $sDbName = oxRegistry::getConfig()->getConfigParam('dbName');
+        $oDb = DatabaseProvider::getDb();
+        $sDbName = Registry::getConfig()->getConfigParam('dbName');
         try {
             $sSql = "SELECT 1 FROM information_schema.COLUMNS WHERE TABLE_SCHEMA = ? AND TABLE_NAME = ? AND COLUMN_NAME = ?";
             $blRet = $oDb->getOne($sSql, [$sDbName, $sTable, $sColumn]);
-        } catch (Exception $oEx) {
+        } catch (\Exception $oEx) {
             $blRet = false;
         }
         return $blRet;
@@ -132,7 +135,7 @@ class psarticlerequest_module extends oxSuperCfg
      */
     protected static function _getFolderToClear($sClearFolderPath = '')
     {
-        $sTempFolderPath = (string)oxRegistry::getConfig()->getConfigParam('sCompileDir');
+        $sTempFolderPath = (string) Registry::getConfig()->getConfigParam('sCompileDir');
         if (!empty($sClearFolderPath) and (strpos($sClearFolderPath, $sTempFolderPath) !== false)) {
             $sFolderPath = $sClearFolderPath;
         } else {
@@ -158,5 +161,4 @@ class psarticlerequest_module extends oxSuperCfg
             }
         }
     }
-
 }

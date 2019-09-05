@@ -1,17 +1,21 @@
 <?php
-
 /**
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @copyright (c) Proud Sourcing GmbH | 2018
- * @link www.proudcommerce.com
- * @package psArticleRequest
- * @version 2.1.0
- **/
-class psarticlerequest_admin_tab_detail extends oxAdminDetails
+ * @package ProudCommerce
+ * @author Florian Palme <florian@proudcommerce.com>
+ */
+
+namespace ProudCommerce\ArticleRequest\Application\Controller\Admin;
+
+
+use OxidEsales\Eshop\Application\Controller\Admin\AdminDetailsController;
+use OxidEsales\Eshop\Application\Model\Shop;
+use OxidEsales\Eshop\Application\Model\User;
+use OxidEsales\Eshop\Core\Email;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Registry;
+use ProudCommerce\ArticleRequest\Application\Model\ArticleRequest;
+
+class ArticleRequest_Tab_Detail extends AdminDetailsController
 {
     protected $_sThisTemplate = 'psarticlerequest_admin_tab_detail.tpl';
 
@@ -19,23 +23,26 @@ class psarticlerequest_admin_tab_detail extends oxAdminDetails
     {
         $myConfig = $this->getConfig();
 
-        $this->addTplParam('shopid', oxRegistry::getConfig()->getShopId());
+        $this->addTplParam('shopid', Registry::getConfig()->getShopId());
 
         $soxId = $this->getEditObjectId();
         if ($soxId != "-1" && isset($soxId)) {
-            $oPsArticleRequest = oxNew("psarticlerequest");
+            /** @var ArticleRequest $oPsArticleRequest */
+            $oPsArticleRequest = oxNew(ArticleRequest::class);
             $oPsArticleRequest->load($soxId);
 
             // customer info
             $oUser = null;
             if ($oPsArticleRequest->psarticlerequest__oxuserid->value) {
-                $oUser = oxNew("oxuser");
+                /** @var User $oUser */
+                $oUser = oxNew(User::class);
                 $oUser->load($oPsArticleRequest->psarticlerequest__oxuserid->value);
                 $oPsArticleRequest->oUser = $oUser;
             }
 
             //Load shop
-            $oShop = oxNew("oxshop");
+            /** @var Shop $oShop */
+            $oShop = oxNew(Shop::class);
             $oShop->load($myConfig->getShopId());
             $oShop = $this->addGlobalParams($oShop);
 
@@ -43,27 +50,28 @@ class psarticlerequest_admin_tab_detail extends oxAdminDetails
                 $iLang = 0;
             }
 
-            $oLang = oxRegistry::getLang();
+            $oLang = Registry::getLang();
             $aLanguages = $oLang->getLanguageNames();
             $this->_aViewData["edit_lang"] = $aLanguages[$iLang];
 
-            $oLetter = new stdClass();
-            $aParams = oxRegistry::getConfig()->getRequestParameter("editval");
+            $oLetter = new \stdClass();
+            $aParams = Registry::getRequest()->getRequestParameter("editval");
 
             //Get value from either admin front-end or template parse result.
             if (isset($aParams['psarticlerequest__oxlongdesc']) && $aParams['psarticlerequest__oxlongdesc']) {
-                $oLetter->psarticlerequest__oxlongdesc = new oxField(stripslashes($aParams['psarticlerequest__oxlongdesc']), oxField::T_RAW);
+                $oLetter->psarticlerequest__oxlongdesc = new Field(stripslashes($aParams['psarticlerequest__oxlongdesc']), Field::T_RAW);
             } else {
-                $oEmail = oxNew("oxEmail");
+                /** @var \ProudCommerce\ArticleRequest\Core\Email $oEmail */
+                $oEmail = oxNew(Email::class);
                 $sDesc = $oEmail->sendArticleRequestToCustomer($oPsArticleRequest->psarticlerequest__oxemail->value, $oPsArticleRequest, null, true);
 
                 $iOldLang = $oLang->getTplLanguage();
                 $oLang->setTplLanguage($iLang);
-                $oLetter->psarticlerequest__oxlongdesc = new oxField($sDesc, oxField::T_RAW);
+                $oLetter->psarticlerequest__oxlongdesc = new Field($sDesc, Field::T_RAW);
                 $oLang->setTplLanguage($iOldLang);
             }
 
-            $this->_aViewData["editor"] = $this->_generateTextEditor("100%", 300, $oLetter, "psarticlerequest__oxlongdesc", "details.tpl.css");
+            $this->_aViewData["editor"] = $this->generateTextEditor("100%", 300, $oLetter, "psarticlerequest__oxlongdesc", "details.tpl.css");
             $this->_aViewData["edit"] = $oPsArticleRequest;
             $this->_aViewData["actshop"] = $myConfig->getShopId();
         }
@@ -78,22 +86,26 @@ class psarticlerequest_admin_tab_detail extends oxAdminDetails
      */
     public function send()
     {
-        $aParams = oxRegistry::getConfig()->getRequestParameter("editval");
+        $aParams = Registry::getRequest()->getRequestParameter("editval");
         //If message exist, send it to customer.
         if (isset($aParams['psarticlerequest__oxlongdesc']) && $aParams['psarticlerequest__oxlongdesc']) {
             $soxId = $this->getEditObjectId();
-            $oPsArticleRequest = oxNew("psarticlerequest");
+            /** @var ArticleRequest $oPsArticleRequest */
+            $oPsArticleRequest = oxNew(ArticleRequest::class);
             $oPsArticleRequest->load($soxId);
-            $oEmail = oxNew("oxEmail");
+            /** @var \ProudCommerce\ArticleRequest\Core\Email $oEmail */
+            $oEmail = oxNew(Email::class);
             $blSendEmailResult = $oEmail->sendArticleRequestToCustomer($oPsArticleRequest->psarticlerequest__oxemail->value, $oPsArticleRequest, $aParams['psarticlerequest__oxlongdesc']);
             if ($blSendEmailResult) {
                 $oPsArticleRequest->psarticlerequest__oxsended->setValue(date("Y-m-d H:i:s"));
-                if ($oPsArticleRequest->psarticlerequest__oxstatus >= psArticleRequest::STATUS_SENT_NOTIFICATION) {
-                    $oPsArticleRequest->psarticlerequest__oxstatus->setValue(psArticleRequest::STATUS_RESENT_NOTIFICATION);
+                if ($oPsArticleRequest->psarticlerequest__oxstatus >= ArticleRequest::STATUS_SENT_NOTIFICATION) {
+                    $oPsArticleRequest->psarticlerequest__oxstatus->setValue(ArticleRequest::STATUS_RESENT_NOTIFICATION);
                 } else {
-                    $oPsArticleRequest->psarticlerequest__oxstatus->setValue(psArticleRequest::STATUS_SENT_NOTIFICATION);
+                    $oPsArticleRequest->psarticlerequest__oxstatus->setValue(ArticleRequest::STATUS_SENT_NOTIFICATION);
                 }
                 $oPsArticleRequest->save();
+            } else {
+                Registry::getUtilsView()->addErrorToDisplay('PS_ARTICLE_REQUEST_MAILNOTSEND');
             }
         }
     }

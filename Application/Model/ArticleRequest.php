@@ -1,17 +1,17 @@
 <?php
-
 /**
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
- *
- * @copyright (c) Proud Sourcing GmbH | 2018
- * @link www.proudcommerce.com
- * @package psArticleRequest
- * @version 2.1.0
- **/
-class psArticleRequest extends oxBase
+ * @package ProudCommerce
+ * @author Florian Palme <florian@proudcommerce.com>
+ */
+
+namespace ProudCommerce\ArticleRequest\Application\Model;
+
+
+use OxidEsales\Eshop\Application\Model\Article;
+use OxidEsales\Eshop\Core\Field;
+use OxidEsales\Eshop\Core\Model\BaseModel;
+
+class ArticleRequest extends BaseModel
 {
     const STATUS_RECEIVED = 1;
     const STATUS_SENT_NOTIFICATION = 2;
@@ -63,7 +63,7 @@ class psArticleRequest extends oxBase
     protected function _insert()
     {
         // set oxinsert value
-        $this->psarticlerequest__oxinsert = new oxField(date("Y-m-d H:i:s"));
+        $this->psarticlerequest__oxinsert = new Field(date("Y-m-d H:i:s"));
         return parent::_insert();
     }
 
@@ -76,7 +76,8 @@ class psArticleRequest extends oxBase
     {
         if ($this->_oArticle == null) {
             $this->_oArticle = false;
-            $oArticle = oxNew("oxarticle");
+            /** @var Article $oArticle */
+            $oArticle = oxNew(Article::class);
             if ($oArticle->load($this->psarticlerequest__oxartid->value)) {
                 $this->_oArticle = $oArticle;
             }
@@ -96,7 +97,8 @@ class psArticleRequest extends oxBase
             if ($oArticle = $this->getArticle()) {
                 $this->_sTitle = $oArticle->oxarticles__oxtitle->value;
                 if ($oArticle->oxarticles__oxparentid->value && !$oArticle->oxarticles__oxtitle->value) {
-                    $oParent = oxNew("oxarticle");
+                    /** @var Article $oParent */
+                    $oParent = oxNew(Article::class);
                     $oParent->load($oArticle->oxarticles__oxparentid->value);
                     $this->_sTitle = $oParent->oxarticles__oxtitle->value . " " . $oArticle->oxarticles__oxvarselect->value;
                 }
