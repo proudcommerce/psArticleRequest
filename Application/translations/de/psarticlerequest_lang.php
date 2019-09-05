@@ -34,4 +34,6 @@ $aLang = [
     'EXCEPTION_INPUT_NOTALLFIELDS' => "Bitte füllen Sie alle Pflichtfelder aus.",
     'EXCEPTION_INPUT_NOVALIDEMAIL' => 'Bitte geben Sie eine korrekte E-Mail-Adresse an.',
 
+    'LF_FORM_DSGVO_INFO_SAVE' => 'Ja, ich habe die Datenschutzerklärung zur Kenntnis genommen und bin damit einverstanden, dass die von mir angegebenen Daten elektronisch erhoben und gespeichert werden. Meine Daten werden dabei nur streng zweckgebunden zur Bearbeitung und Beantwortung meiner Anfrage benutzt. Mit dem Absenden des Kontaktformulars erkläre ich mich mit der Verarbeitung einverstanden. (Datenschutzerklärung)',
+
 ];
