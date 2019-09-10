@@ -1,4 +1,3 @@
-[{* tabsl angepasst *}]
 [{oxscript include="js/libs/jqBootstrapValidation.min.js" priority=10}]
 [{oxscript add="$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();"}]
 
@@ -16,7 +15,7 @@
         <input type="hidden" name="c_mach" value="[{$oCaptcha->getHash()}]"/>
     </div>
 
-    <div class="row">
+    <div class="">
         <div class="form-group">
             <label class="req col-xs-4">[{oxmultilang ident="PS_ARTICLEREQUEST_EMAIL" }]:</label>
             <div class="col-xs-8">
@@ -35,7 +34,7 @@
                             <span class="verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
                         [{/if}]
                     </div>
-
+                    <br>
                     <input class="js-oxValidate js-oxValidate_notEmpty form-control" required type="text" data-fieldsize="verify" name="c_mac" value="">
                 </div>
                 <div class="help-block"></div>
@@ -45,7 +44,7 @@
         <div class="col-xs-12">
             <div class="note">
                 <br>
-                [{oxmultilang ident="LF_FORM_DSGVO_INFO_SAVE" }]
+                [{oxmultilang ident="PS_ARTICLE_REQUEST_DSGVO" }]
                 <br><br>
             </div>
 

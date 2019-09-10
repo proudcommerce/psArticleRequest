@@ -21,18 +21,18 @@ $psModuleDesc_en = '
 /**
  * Module information
  */
-$aModule = array(
-    'id' => 'psArticleRequest',
-    'title' => 'psArticleRequest',
+$aModule = [
+    'id'          => 'psArticleRequest',
+    'title'       => 'psArticleRequest',
     'description' => [
         'de' => $psModuleDesc_de,
         'en' => $psModuleDesc_en,
     ],
-    'thumbnail' => 'logo_pc-os.jpg',
-    'version' => '3.0.0',
-    'author' => 'ProudCommerce',
-    'url' => 'http://www.proudcommerce.com',
-    'email' => 'module@proudcommerce.com',
+    'thumbnail'   => 'logo_pc-os.jpg',
+    'version'     => '3.0.0',
+    'author'      => 'ProudCommerce',
+    'url'         => 'http://www.proudcommerce.com',
+    'email'       => 'module@proudcommerce.com',
     'controllers' => [
         'psarticlerequest_cron'             => \ProudCommerce\ArticleRequest\Application\Controller\Cron::class,
         'psarticlerequest_admin_main'       => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequest_Main::class,
@@ -42,13 +42,13 @@ $aModule = array(
 
     'extend' => [
         \OxidEsales\Eshop\Application\Controller\Admin\ArticleStock::class
-            => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleStock::class,
+        => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleStock::class,
 
         \OxidEsales\Eshop\Application\Controller\ArticleDetailsController::class
-            => \ProudCommerce\ArticleRequest\Application\Controller\ArticleDetailsController::class,
+        => \ProudCommerce\ArticleRequest\Application\Controller\ArticleDetailsController::class,
 
         \OxidEsales\Eshop\Core\Email::class
-            => \ProudCommerce\ArticleRequest\Core\Email::class,
+        => \ProudCommerce\ArticleRequest\Core\Email::class,
     ],
 
     'templates' => [
@@ -63,46 +63,46 @@ $aModule = array(
     'blocks' => [
         [
             'template' => 'page/details/inc/tabs.tpl',
-            'block' => 'details_tabs_media',
-            'file' => '/application/views/blocks/details_tabs_media.tpl',
+            'block'    => 'details_tabs_media',
+            'file'     => '/application/views/blocks/details_tabs_media.tpl',
             'position' => 100
         ],
 
         [
             'template' => 'layout/page.tpl',
-            'block' => 'content_main',
-            'file' => '/application/views/blocks/layout_page_content_main.tpl',
+            'block'    => 'content_main',
+            'file'     => '/application/views/blocks/layout_page_content_main.tpl',
             'position' => 100
         ],
     ],
 
     'settings' => [
         [
-            'group' => 'psArticleRequest_config',
-            'name' => 'psArticleRequest_stockinfo',
-            'type' => 'select',
-            'value' => 'man',
-            'position' => 10,
+            'group'       => 'psArticleRequest_config',
+            'name'        => 'psArticleRequest_stockinfo',
+            'type'        => 'select',
+            'value'       => 'man',
+            'position'    => 10,
             'constraints' => 'man|auto1|auto2'
         ],
         [
-            'group' => 'psArticleRequest_config',
-            'name' => 'psArticleRequest_cronkey',
-            'type' => 'str',
-            'value' => md5('psArticleRequest' . time()),
+            'group'    => 'psArticleRequest_config',
+            'name'     => 'psArticleRequest_cronkey',
+            'type'     => 'str',
+            'value'    => md5('psArticleRequest' . time()),
             'position' => 20
         ],
         [
-            'group' => 'psArticleRequest_config',
-            'name' => 'psArticleRequest_minstock',
-            'type' => 'str',
-            'value' => 1,
+            'group'    => 'psArticleRequest_config',
+            'name'     => 'psArticleRequest_minstock',
+            'type'     => 'str',
+            'value'    => 1,
             'position' => 30
         ],
     ],
 
     'events' => [
-        'onActivate' => '\ProudCommerce\ArticleRequest\Core\Events::onActivate',
+        'onActivate'   => '\ProudCommerce\ArticleRequest\Core\Events::onActivate',
         'onDeactivate' => '\ProudCommerce\ArticleRequest\Core\Events::onDeactivate',
     ],
-);
+];

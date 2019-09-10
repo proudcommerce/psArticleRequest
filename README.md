@@ -19,7 +19,7 @@ Installation
 
 Changelog
 
-    2019-09-05	3.0.0	Upgrade Module to fit OXID 6.x
+    2019-09-10	3.0.0	Upgrade Module to fit OXID 6.x
 	2018-08-27	2.1.0	Add cronjob for sending emails to registered users
 	2017-02-02	2.0.1	Fix email validation for older versions
 	2016-11-29	2.0.0	Ready for OXID 4.10/5.3, New feature: auto notification for registered users
