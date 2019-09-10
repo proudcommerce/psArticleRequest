@@ -16,6 +16,7 @@ use ProudCommerce\ArticleRequest\Application\Model\ArticleRequest;
 class ArticleDetailsController extends ArticleDetailsController_parent
 {
     protected $_oCaptcha;
+    protected $_iArticleRequestStatus;
 
     /**
      * get captcha
@@ -44,8 +45,8 @@ class ArticleDetailsController extends ArticleDetailsController_parent
         //control captcha
         $oCaptcha = $this->getCaptcha();
         if ( !$oCaptcha->passCaptcha() ) {
-            Registry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_WRONG_VERIFICATION_CODE');
-            return;
+            //Registry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_WRONG_VERIFICATION_CODE');
+            return false;
         }
 
         $aParams = Registry::getRequest()->getRequestParameter( 'pa' );
@@ -54,7 +55,7 @@ class ArticleDetailsController extends ArticleDetailsController_parent
         if(Registry::getConfig()->getActiveShop()->oxshops__oxversion->value >= 4.9) {
             if ( !isset( $aParams['email'] ) || !$oMailValidator->isValidEmail( $aParams['email'] ) ) {
                 Registry::getUtilsView()->addErrorToDisplay('MESSAGE_INVALID_EMAIL');
-                return;
+                return false;
             }
         } else {
             // checking email address
@@ -81,6 +82,11 @@ class ArticleDetailsController extends ArticleDetailsController_parent
         $oEmail->sendArticleRequestNotification($aParams, $oArticleRequest);
 
         $this->_iArticleRequestStatus = 1;
-        Registry::getUtilsView()->addErrorToDisplay('PS_ARTICLEREQUEST_SUCCESS');
+    }
+
+
+    public function psArticleRequestSend()
+    {
+        return (int) $this->_iArticleRequestStatus;
     }
 }

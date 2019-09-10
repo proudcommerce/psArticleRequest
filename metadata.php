@@ -67,6 +67,13 @@ $aModule = array(
             'file' => '/application/views/blocks/details_tabs_media.tpl',
             'position' => 100
         ],
+
+        [
+            'template' => 'layout/page.tpl',
+            'block' => 'content_main',
+            'file' => '/application/views/blocks/layout_page_content_main.tpl',
+            'position' => 100
+        ],
     ],
 
     'settings' => [
