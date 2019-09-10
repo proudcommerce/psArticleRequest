@@ -4,7 +4,7 @@
   "description": "psArticleRequest",
   "type": "oxideshop-module",
   "license": [
-    "GNU"
+    "GPL-3.0-or-later"
   ],
   "authors": [
     {
