@@ -17,7 +17,7 @@ $aLang = [
 
     'NAVIGATION_PSMODULE'                          => 'ProudCommerce Module',
     'psarticlerequest'                             => 'psArticleRequest',
-    'psarticlerequest_request'                     => 'übersicht',
+    'psarticlerequest_request'                     => 'Übersicht',
     'tbclpsarticlerequest_detail'                  => 'Stamm',
     'SHOP_MODULE_GROUP_psArticleRequest_config'    => 'Allgemein',
     'SHOP_MODULE_psArticleRequest_stockinfo'       => 'Lagerbestandsinfo',
