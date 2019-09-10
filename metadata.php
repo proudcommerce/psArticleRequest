@@ -52,26 +52,26 @@ $aModule = [
     ],
 
     'templates' => [
-        'form/ps_article_request_form.tpl'            => 'pc/psarticlerequest/application/views/flow/tpl/form/ps_article_request_form.tpl',
-        'email/ps_article_request_notification.tpl'   => 'pc/psarticlerequest/application/views/flow/tpl/email/ps_article_request_notification.tpl',
-        'email/ps_article_request_customer_email.tpl' => 'pc/psarticlerequest/application/views/flow/tpl/email/ps_article_request_customer_email.tpl',
-        'psarticlerequest_admin_main.tpl'             => 'pc/psarticlerequest/application/views/admin/tpl/psarticlerequest_admin_main.tpl',
-        'psarticlerequest_admin_list.tpl'             => 'pc/psarticlerequest/application/views/admin/tpl/psarticlerequest_admin_list.tpl',
-        'psarticlerequest_admin_tab_detail.tpl'       => 'pc/psarticlerequest/application/views/admin/tpl/psarticlerequest_admin_tab_detail.tpl',
+        'form/ps_article_request_form.tpl'            => 'pc/psarticlerequest/Application/views/flow/tpl/form/ps_article_request_form.tpl',
+        'email/ps_article_request_notification.tpl'   => 'pc/psarticlerequest/Application/views/flow/tpl/email/ps_article_request_notification.tpl',
+        'email/ps_article_request_customer_email.tpl' => 'pc/psarticlerequest/Application/views/flow/tpl/email/ps_article_request_customer_email.tpl',
+        'psarticlerequest_admin_main.tpl'             => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_main.tpl',
+        'psarticlerequest_admin_list.tpl'             => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_list.tpl',
+        'psarticlerequest_admin_tab_detail.tpl'       => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_tab_detail.tpl',
     ],
 
     'blocks' => [
         [
             'template' => 'page/details/inc/tabs.tpl',
             'block'    => 'details_tabs_media',
-            'file'     => '/application/views/blocks/details_tabs_media.tpl',
+            'file'     => '/Application/views/blocks/details_tabs_media.tpl',
             'position' => 100
         ],
 
         [
             'template' => 'layout/page.tpl',
             'block'    => 'content_main',
-            'file'     => '/application/views/blocks/layout_page_content_main.tpl',
+            'file'     => '/Application/views/blocks/layout_page_content_main.tpl',
             'position' => 100
         ],
     ],
