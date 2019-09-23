@@ -3,6 +3,7 @@
 /**
  * Metadata version
  */
+
 $sMetadataVersion = '2.0';
 
 $psModuleDesc_de = '
@@ -38,17 +39,24 @@ $aModule = [
         'psarticlerequest_admin_main'       => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequest_Main::class,
         'psarticlerequest_admin_list'       => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequest_List::class,
         'psarticlerequest_admin_tab_detail' => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequest_Tab_Detail::class,
+        'psarticlerequest_admin_settings_main'       => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequestSettings_Main::class,
+        'psarticlerequest_admin_settings_list'       => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequestSettings_List::class,
+        'psarticlerequest_admin_settings_tab_detail' => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequestSettings_Tab_Detail::class,
+        'psarticlerequest_admin_settings_tab_detail_ajax' => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequestSettings_Tab_Detail_Ajax::class,
     ],
 
     'extend' => [
         \OxidEsales\Eshop\Application\Controller\Admin\ArticleStock::class
-        => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleStock::class,
+            => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleStock::class,
 
         \OxidEsales\Eshop\Application\Controller\ArticleDetailsController::class
-        => \ProudCommerce\ArticleRequest\Application\Controller\ArticleDetailsController::class,
+            => \ProudCommerce\ArticleRequest\Application\Controller\ArticleDetailsController::class,
 
         \OxidEsales\Eshop\Core\Email::class
-        => \ProudCommerce\ArticleRequest\Core\Email::class,
+            => \ProudCommerce\ArticleRequest\Core\Email::class,
+
+        \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails::class
+            => \ProudCommerce\ArticleRequest\Application\Component\Widget\ArticleDetails::class,
     ],
 
     'templates' => [
@@ -58,6 +66,10 @@ $aModule = [
         'psarticlerequest_admin_main.tpl'             => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_main.tpl',
         'psarticlerequest_admin_list.tpl'             => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_list.tpl',
         'psarticlerequest_admin_tab_detail.tpl'       => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_tab_detail.tpl',
+        'psarticlerequest_admin_settings_main.tpl'             => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_settings_main.tpl',
+        'psarticlerequest_admin_settings_list.tpl'             => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_settings_list.tpl',
+        'psarticlerequest_admin_settings_tab_detail.tpl'       => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_settings_tab_detail.tpl',
+        'psarticlerequest_admin_settings_tab_detail_ajax.tpl'       => 'pc/psarticlerequest/Application/views/admin/tpl/psarticlerequest_admin_settings_tab_detail_ajax.tpl',
     ],
 
     'blocks' => [

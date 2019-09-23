@@ -28,6 +28,7 @@ class Events extends Base
     {
         # setup/sql/install.sql
         $res = self::_dbEvent('install.sql', 'onActivate()', 'psarticlerequest;OXID');
+        $res = self::_dbEvent('install_categories.sql', 'onActivate()', 'psarticlerequest_categories;OXID');
         return $res;
     }
 

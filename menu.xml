@@ -5,6 +5,9 @@
             <SUBMENU id="psarticlerequest_request" cl="psarticlerequest_admin_main"  list="psarticlerequest_admin_list" >
             	<TAB id="tbclpsarticlerequest_detail" cl="psarticlerequest_admin_tab_detail" />
             </SUBMENU>
+            <SUBMENU id="psarticlerequest_settings" cl="psarticlerequest_admin_settings_main"  list="psarticlerequest_admin_settings_list" >
+                <TAB id="tbclpsarticlerequest_settings_detail" cl="psarticlerequest_admin_settings_tab_detail" />
+            </SUBMENU>
         </MAINMENU>
     </OXMENU>
 </OX>

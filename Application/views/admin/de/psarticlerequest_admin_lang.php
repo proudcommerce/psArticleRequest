@@ -18,7 +18,9 @@ $aLang = [
     'NAVIGATION_PSMODULE'                          => 'ProudCommerce Module',
     'psarticlerequest'                             => 'psArticleRequest',
     'psarticlerequest_request'                     => 'Übersicht',
+    'psarticlerequest_settings'                     => 'Einstellungen',
     'tbclpsarticlerequest_detail'                  => 'Stamm',
+    'tbclpsarticlerequest_settings_detail'                  => 'Stamm',
     'SHOP_MODULE_GROUP_psArticleRequest_config'    => 'Allgemein',
     'SHOP_MODULE_psArticleRequest_stockinfo'       => 'Lagerbestandsinfo',
     'HELP_SHOP_MODULE_psArticleRequest_stockinfo'  => '<b>manuell:</b> eMails werden nur versendet wenn man die Aktion in der psArticleRequest-Übersicht veranlasst.<br><br><b>wenn wieder Lagerbestand (nach Datum):</b> Beim Erhöhen des Bestands (z. B. +3) werden die erste drei Kunden informiert welche eine Verfügbarkeitsanfrage gestellt haben.<br><br><b>wenn wieder Lagerbestand (alle Anfrage):</b> Beim Erhöhen des Bestands im Shop-Admin werden alle Kunden informiert welche eine Verfügbarkeitsanfrage gestellt haben.<br><br><b>Cronjob:</b> Sofern der Cronjob aktiv ist werden über diesen automatisch Kunden informiert versendet, sofern ein Artikel wieder verfügbar ist.',
@@ -44,4 +46,5 @@ $aLang = [
     'PS_ARTICLE_REQUEST_MAIL_AV3'                  => 'Sie hatten sich am',
     'PS_ARTICLE_REQUEST_MAIL_AV4'                  => 'eingetragen, um eine Nachricht zu erhalten, sobald das Produkt wieder verfügbar ist.',
     'PS_ARTICLE_REQUEST_MAILNOTSEND'               => 'E-Mail konnte nicht verschickt werden.',
+    'PS_ARTICLEREQUEST_LIMITTOCATEGORY' => 'Anfrage-Formular auf Kategorien beschränken',
 ];

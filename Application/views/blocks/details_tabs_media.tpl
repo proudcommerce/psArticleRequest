@@ -1,6 +1,6 @@
 [{$smarty.block.parent}]
 [{block name="details_tabs_psarticlequest"}]
-    [{if $oDetailsProduct->getStockStatus() == -1}]
+    [{if $oDetailsProduct->getStockStatus() == -1 && $oView->showPsArticleRequest()}]
         [{capture append="tabs"}]<a href="#ps_article_request" class="nav-link" data-toggle="tab">[{oxmultilang ident="PS_ARTICLEREQUEST_TAB_LINK_TITLE"}]</a>[{/capture}]
         [{capture append="tabsContent"}]
             <div id="ps_article_request" class="tab-pane[{if $blFirstTab}] active[{/if}]">

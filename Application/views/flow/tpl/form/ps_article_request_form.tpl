@@ -2,7 +2,7 @@
 [{oxscript add="$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();"}]
 
 <p>[{oxmultilang ident="PS_ARTICLEREQUEST_WHEN_INFORM_TITLE" }]</p>
-<form name="articlerequest" action="[{$oViewConf->getSelfActionLink() }]" method="post">
+<form name="articlerequest" action="[{$oViewConf->getSelfActionLink() }]" method="post" class="psArticleRequest">
     <div>
         [{$oViewConf->getHiddenSid() }]
         [{$oViewConf->getNavFormParams() }]
@@ -15,29 +15,38 @@
         <input type="hidden" name="c_mach" value="[{$oCaptcha->getHash()}]"/>
     </div>
 
-    <div class="">
-        <div class="form-group">
-            <label class="req col-xs-4">[{oxmultilang ident="PS_ARTICLEREQUEST_EMAIL" }]:</label>
-            <div class="col-xs-8">
-                <input class="form-control" required type="email" name="pa[email]" value="[{if $oxcmp_user }][{$oxcmp_user->oxuser__oxusername->value }][{/if}]" size="20" maxlength="128">
-                <div class="help-block"></div>
+    <div class="row">
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="row">
+                    <label class="req col-xs-4">[{oxmultilang ident="PS_ARTICLEREQUEST_EMAIL" }]:</label>
+                    <div class="col-xs-8">
+                        <input class="form-control" required type="email" name="pa[email]" value="[{if $oxcmp_user }][{$oxcmp_user->oxuser__oxusername->value }][{/if}]" size="20" maxlength="128">
+                        <div class="help-block"></div>
+                    </div>
+                </div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="req col-xs-4">[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]:</label>
-            <div class="col-xs-8">
-                <div class="input-group">
-                    <div class="input-group-addon">
-                        [{if $oCaptcha->isImageVisible()}]
-                            <img class="verificationCode" src="[{$oCaptcha->getImageUrl()}]" alt="[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]">
-                        [{else}]
-                            <span class="verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
-                        [{/if}]
+
+        <div class="col-xs-12">
+            <div class="form-group">
+                <div class="row">
+                    <label class="req col-xs-4">[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]:</label>
+                    <div class="col-xs-8">
+                        <div class="input-group">
+                            <div class="input-group-addon">
+                                [{if $oCaptcha->isImageVisible()}]
+                                    <img class="verificationCode" src="[{$oCaptcha->getImageUrl()}]" alt="[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]">
+                                [{else}]
+                                    <span class="verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
+                                [{/if}]
+                            </div>
+                            <br>
+                            <input class="js-oxValidate js-oxValidate_notEmpty form-control" required type="text" data-fieldsize="verify" name="c_mac" value="">
+                        </div>
+                        <div class="help-block"></div>
                     </div>
-                    <br>
-                    <input class="js-oxValidate js-oxValidate_notEmpty form-control" required type="text" data-fieldsize="verify" name="c_mac" value="">
                 </div>
-                <div class="help-block"></div>
             </div>
         </div>
 
