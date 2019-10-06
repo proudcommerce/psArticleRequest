@@ -12,3 +12,8 @@ class ArticleDetailsController_parent extends \OxidEsales\Eshop\Application\Cont
 namespace ProudCommerce\ArticleRequest\Core;
 
 class Email_parent extends \OxidEsales\Eshop\Core\Email {}
+
+
+namespace ProudCommerce\ArticleRequest\Application\Component\Widget;
+
+class ArticleDetails_parent extends \OxidEsales\Eshop\Application\Component\Widget\ArticleDetails {}
