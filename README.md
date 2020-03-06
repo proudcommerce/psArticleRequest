@@ -18,7 +18,8 @@ Installation
 ```
 
 Changelog
-
+	
+	2020-03-06	3.1.1	Fix: Only send automatic e-mails for the article where the stock was changed
 	2019-10-06	3.1.0	Feature: Limit article request to specified categories
     2019-09-10	3.0.0	Upgrade Module to fit OXID 6.x
 	2018-08-27	2.1.0	Add cronjob for sending emails to registered users
