@@ -22,8 +22,10 @@ class ArticleStock extends ArticleStock_parent
      */
     public function save()
     {
+        $soxId = $this->getEditObjectId();
+
         if (Registry::getConfig()->getConfigParam('psArticleRequest_stockinfo') == "auto1") {
-            $soxId = $this->getEditObjectId();
+            
             /** @var Article $oArticle */
             $oArticle = oxNew(Article::class);
             $oArticle->load($soxId);
@@ -33,7 +35,7 @@ class ArticleStock extends ArticleStock_parent
         parent::save();
 
         if (Registry::getConfig()->getConfigParam('psArticleRequest_stockinfo') != "man") {
-            $this->_getPsArticleRequests($iOldStock);
+            $this->_getPsArticleRequests($soxId, $iOldStock);
         }
 
     }
@@ -44,7 +46,7 @@ class ArticleStock extends ArticleStock_parent
      * @throws \OxidEsales\Eshop\Core\Exception\DatabaseConnectionException
      * @throws \OxidEsales\Eshop\Core\Exception\DatabaseErrorException
      */
-    protected function _getPsArticleRequests($iOldStock = 0)
+    protected function _getPsArticleRequests($psArticle, $iOldStock = 0)
     {
         $iPsStock = 999;   // psArticleRequest_stockinfo == auto2
         if (Registry::getConfig()->getConfigParam('psArticleRequest_stockinfo') == "auto1") {
@@ -54,7 +56,7 @@ class ArticleStock extends ArticleStock_parent
         }
 
         $iCount = 1;
-        $sSql = 'SELECT oxid, oxemail FROM psarticlerequest WHERE oxstatus = 1 ORDER BY OXINSERT';
+        $sSql = "SELECT oxid, oxemail FROM psarticlerequest WHERE oxstatus = 1 AND oxartid = '" . $psArticle . "' ORDER BY OXINSERT";
         $aRequests = DatabaseProvider::getDb(DatabaseProvider::FETCH_MODE_ASSOC)->getAll($sSql);
         if ($iPsStock > 0 && count($aRequests) > 0) {
             foreach ($aRequests as $aRequest) {
