@@ -17,6 +17,12 @@ Installation
 	composer require proudcommerce/psarticlerequest
 ```
 
+Notice
+
+	This module requires oxid captcha module (oxid-projects/captcha-module) and must
+	be acticated before using psArticleRequest. It´s required by composer.json.
+	
+	
 Changelog
 	
 	2020-03-06	3.1.1	Fix: Only send automatic e-mails for the article where the stock was changed
