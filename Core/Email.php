@@ -48,12 +48,12 @@ class Email extends Email_parent
         $oLang = Registry::getLang();
 
         // create messages
-        $oSmarty = $this->_getSmarty();
+        $renderer = $this->getRenderer();
         $this->setViewData("product", $oArticle);
 
         // Process view data array through oxOutput processor
         $this->_processViewArray();
-        $mailContent = $oSmarty->fetch($this->_sArticleRequestNotificationTemplate);
+        $mailContent = $renderer->renderTemplate($this->_sArticleRequestNotificationTemplate, $this->getViewData());
 
         $this->setRecipient($aParams['email'], $aParams['email']);
         $this->setSubject($oLang->translateString('PS_ARTICLEREQUEST_SEND_SUBJECT', $iRequestLang) . " " . $oArticle->oxarticles__oxtitle->value);
@@ -84,7 +84,8 @@ class Email extends Email_parent
 
         //create messages
         $oLang = Registry::getLang();
-        $oSmarty = $this->_getSmarty();
+        $renderer = $this->getRenderer();
+        //$oSmarty = $this->_getSmarty();
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
         $oArticle = $oArticleRequest->getArticle();
         $this->setViewData("product", $oArticle);
@@ -93,24 +94,20 @@ class Email extends Email_parent
         // Process view data array through oxOutput processor
         $this->_processViewArray();
 
-        $aStore['INCLUDE_ANY'] = $oSmarty->security_settings['INCLUDE_ANY'];
         //V send email in order language
         $iOldTplLang = $oLang->getTplLanguage();
         $iOldBaseLang = $oLang->getTplLanguage();
         $oLang->setTplLanguage($iRequestLang);
         $oLang->setBaseLanguage($iRequestLang);
 
-        $oSmarty->security_settings['INCLUDE_ANY'] = true;
         // force non admin to get correct paths (tpl, img)
         $myConfig->setAdminMode(false);
 
-        $this->setBody($oSmarty->fetch($this->_sArticleRequestCustomerTemplate));
+        $this->setBody($renderer->renderTemplate($this->_sArticleRequestCustomerTemplate, $this->getViewData()));
 
         $myConfig->setAdminMode(true);
         $oLang->setTplLanguage($iOldTplLang);
         $oLang->setBaseLanguage($iOldBaseLang);
-        // set it back
-        $oSmarty->security_settings['INCLUDE_ANY'] = $aStore['INCLUDE_ANY'];
 
         $this->setRecipient($sRecipient, $sRecipient);
         $this->setSubject($oLang->translateString('PS_ARTICLEREQUEST_SEND_SUBJECT_AV', $iRequestLang) . " " . $oArticle->oxarticles__oxtitle->value);
