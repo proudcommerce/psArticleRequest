@@ -25,7 +25,8 @@ Notice
 	
 Changelog
 	
-	2022-03-07	3.1.2	Fix: Smarty rendering oxmail
+	2022-03-11	3.1.3	Fix: Smarty rendering oxmail <= 6.2
+    2022-03-07	3.1.2	Fix: Smarty rendering oxmail
 	2020-03-06	3.1.1	Fix: Only send automatic e-mails for the article where the stock was changed
 	2019-10-06	3.1.0	Feature: Limit article request to specified categories
     2019-09-10	3.0.0	Upgrade Module to fit OXID 6.x

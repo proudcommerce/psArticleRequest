@@ -6,9 +6,10 @@
 
 namespace ProudCommerce\ArticleRequest\Core;
 
-
 use OxidEsales\Eshop\Application\Model\Article;
 use OxidEsales\Eshop\Core\Registry;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererBridgeInterface;
+use OxidEsales\EshopCommunity\Internal\Framework\Templating\TemplateRendererInterface;
 
 class Email extends Email_parent
 {
@@ -48,12 +49,22 @@ class Email extends Email_parent
         $oLang = Registry::getLang();
 
         // create messages
-        $renderer = $this->getRenderer();
+        if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() >= 6.2) {
+            $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
+        } else {
+            $oSmarty = $this->_getSmarty();
+        }
+
         $this->setViewData("product", $oArticle);
 
         // Process view data array through oxOutput processor
         $this->_processViewArray();
-        $mailContent = $renderer->renderTemplate($this->_sArticleRequestNotificationTemplate, $this->getViewData());
+
+        if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() >= 6.2) {
+            $mailContent = $this->setAltBody($renderer->renderTemplate($this->_sArticleRequestNotificationTemplate, $this->getViewData()));
+        } else {
+            $mailContent = $oSmarty->fetch($this->_sArticleRequestNotificationTemplate);
+        }
 
         $this->setRecipient($aParams['email'], $aParams['email']);
         $this->setSubject($oLang->translateString('PS_ARTICLEREQUEST_SEND_SUBJECT', $iRequestLang) . " " . $oArticle->oxarticles__oxtitle->value);
@@ -84,8 +95,15 @@ class Email extends Email_parent
 
         //create messages
         $oLang = Registry::getLang();
-        $renderer = $this->getRenderer();
-        //$oSmarty = $this->_getSmarty();
+
+        if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() >= 6.2) {
+            $renderer = $this->getContainer()->get(TemplateRendererBridgeInterface::class)->getTemplateRenderer();
+        } else {
+            $oSmarty = $this->_getSmarty();
+            // #1469 - we need to patch security here as we do not use standard template dir, so smarty stops working
+            $aStore['INCLUDE_ANY'] = $oSmarty->security_settings['INCLUDE_ANY'];
+        }
+
         $this->setViewData("shopTemplateDir", $myConfig->getTemplateDir(false));
         $oArticle = $oArticleRequest->getArticle();
         $this->setViewData("product", $oArticle);
@@ -100,14 +118,27 @@ class Email extends Email_parent
         $oLang->setTplLanguage($iRequestLang);
         $oLang->setBaseLanguage($iRequestLang);
 
+        if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() < 6.2) {
+            $oSmarty->security_settings['INCLUDE_ANY'] = true;
+        }
+
         // force non admin to get correct paths (tpl, img)
         $myConfig->setAdminMode(false);
 
-        $this->setBody($renderer->renderTemplate($this->_sArticleRequestCustomerTemplate, $this->getViewData()));
+        if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() >= 6.2) {
+            $this->setBody($renderer->renderTemplate($this->_sArticleRequestCustomerTemplate, $this->getViewData()));
+        } else {
+            $this->setBody($oSmarty->fetch($this->_sArticleRequestCustomerTemplate));
+        }
 
         $myConfig->setAdminMode(true);
         $oLang->setTplLanguage($iOldTplLang);
         $oLang->setBaseLanguage($iOldBaseLang);
+
+        if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() < 6.2) {
+            // set it back
+            $oSmarty->security_settings['INCLUDE_ANY'] = $aStore['INCLUDE_ANY'];
+        }
 
         $this->setRecipient($sRecipient, $sRecipient);
         $this->setSubject($oLang->translateString('PS_ARTICLEREQUEST_SEND_SUBJECT_AV', $iRequestLang) . " " . $oArticle->oxarticles__oxtitle->value);
