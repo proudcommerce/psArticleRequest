@@ -61,14 +61,14 @@ class Email extends Email_parent
         $this->_processViewArray();
 
         if (\OxidEsales\Eshop\Core\ShopVersion::getVersion() >= 6.2) {
-            $mailContent = $this->setAltBody($renderer->renderTemplate($this->_sArticleRequestNotificationTemplate, $this->getViewData()));
+            $this->setBody($renderer->renderTemplate($this->_sArticleRequestNotificationTemplate, $this->getViewData()));
         } else {
             $mailContent = $oSmarty->fetch($this->_sArticleRequestNotificationTemplate);
+            $this->setBody($mailContent);
         }
 
         $this->setRecipient($aParams['email'], $aParams['email']);
         $this->setSubject($oLang->translateString('PS_ARTICLEREQUEST_SEND_SUBJECT', $iRequestLang) . " " . $oArticle->oxarticles__oxtitle->value);
-        $this->setBody($mailContent);
 
         return $this->send();
     }
