@@ -156,11 +156,10 @@ window.onload = function ()
 							class="[{if $listitem->getRequestStatus()==1}]listitemred[{elseif $listitem->getRequestStatus()==2}]listitemgreen[{else}][{$listclass}][{/if}]">[{
 							$listitem->getTitle() }]</a>
 					</div></td>
-				<td class="[{$listclass}]">[{ if !$listitem->isOx() }] [{ if
-					$readonly == ""}] <a
+				<td class="[{$listclass}]">[{ if !$listitem->isOx() }] <a
 					href="Javascript:top.oxid.admin.deleteThis('[{ $listitem->psarticlerequest__oxid->value }]');"
 					class="delete" id="del.[{$_cnt}]" [{include file="help.tpl"
-					helpid=item_delete}]></a> [{/if}] [{/if}]
+					helpid=item_delete}]></a> [{/if}]
                     [{/block}]
 				</td>
 			</tr>
