@@ -25,6 +25,7 @@ Notice
 	
 Changelog
 	
+    2022-06-08	3.1.4   Fix: typo, registerdate format, mail problem > 6.2; Add: Delete button
 	2022-03-11	3.1.3	Fix: Smarty rendering oxmail <= 6.2
     2022-03-07	3.1.2	Fix: Smarty rendering oxmail
 	2020-03-06	3.1.1	Fix: Only send automatic e-mails for the article where the stock was changed
@@ -60,5 +61,5 @@ License
 
 Copyright
 
-	Proud Sourcing GmbH 2019
-	www.proudcommerce.com / www.proudsourcing.de
+	ProudCommerce 2022
+	www.proudcommerce.com
