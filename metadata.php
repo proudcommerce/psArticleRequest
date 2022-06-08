@@ -7,7 +7,7 @@
 $sMetadataVersion = '2.0';
 
 $psModuleDesc_de = '
-    Benachrichtigung bei nicht verfg&uuml;baren Artikeln, sobald diese wieder lieferbar sind.<br>
+    Benachrichtigung bei nicht verf&uuml;gbaren Artikeln, sobald diese wieder lieferbar sind.<br>
     <hr style="margin-top: 15px;">
     Aktuellste Modulversion: &nbsp; <img src="https://www.proudcommerce.com/module/version/psArticleRequest.png" border="0">
     <img src="https://www.proudcommerce.com/module/img/icon_link.png" border="0" style="width: 10px; height: 11px;">&nbsp; <a href="https://github.com/proudcommerce/psArticleRequest" target="_blank">Modul-Info</a>
