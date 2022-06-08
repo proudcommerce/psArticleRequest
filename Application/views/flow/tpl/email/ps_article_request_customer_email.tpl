@@ -11,7 +11,7 @@
     <a href="[{ $product->getLink() }]">[{ $product->getLink() }]</a>
     <br><br>
 
-    [{ oxmultilang ident="PS_ARTICLE_REQUEST_MAIL_AV3" }] [{ $oArticleRequest->psarticlerequest__oxtimestamp->value|oxformdate:'datetime':true }] [{ oxmultilang ident="PS_ARTICLE_REQUEST_MAIL_AV4" }]
+    [{ oxmultilang ident="PS_ARTICLE_REQUEST_MAIL_AV3" }] [{ $oArticleRequest->psarticlerequest__oxtimestamp->value|date_format:"%d.%m.%Y" }] [{ oxmultilang ident="PS_ARTICLE_REQUEST_MAIL_AV4" }]
     <br><br>
 
 [{include file="email/html/footer.tpl"}]
