@@ -22,6 +22,8 @@ Notice
 	This module requires oxid captcha module (oxid-projects/captcha-module) and must
 	be acticated before using psArticleRequest. It´s required by composer.json.
 	
+	The cronjob URL is: https://your-shop.com/?cl=psArticleRequest_cron&key=THE_KEY_FROM_MODULES_PSARTICLEREQUEST_SETTINGS
+	
 	
 Changelog
 	
