@@ -122,7 +122,7 @@ class Cron extends FrontendController
             /** @var Article $oArticle */
             $oArticle = oxNew(Article::class);
             if ($oArticle->load($artid)) {
-                $aArticles[$artid] = ['artnum' => $oArticle->oxarticles__oxartnum->value, 'stock' => $oArticle->oxarticles__oxstock->value];
+                $aArticles[$artid] = ['artnum' => $oArticle->oxarticles__oxartnum->value, 'stock' => $oArticle->oxarticles__oxstock->value + (Registry::getConfig()->getConfigParam('psArticleRequest_usevarstock') ? $oArticle->oxarticles__oxvarstock->value : 0)];
             }
         }
         return $aArticles;

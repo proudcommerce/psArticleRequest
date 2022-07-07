@@ -111,6 +111,13 @@ $aModule = [
             'value'    => 1,
             'position' => 30
         ],
+        [
+            'group'    => 'psArticleRequest_config',
+            'name'     => 'psArticleRequest_usevarstock',
+            'type'     => 'bool',
+            'value'    => false,
+            'position' => 40
+        ],
     ],
 
     'events' => [
