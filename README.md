@@ -27,6 +27,7 @@ Notice
 	
 Changelog
 	
+    2022-21-09: 3.1.6   Feature: Let user select variant if is main product and has not on stock variants
     2022-07-28: 3.1.5   Feature: Allow using oxvarstock for product availability check
     2022-06-08	3.1.4   Fix: typo, registerdate format, mail problem > 6.2; Add: Delete button
 	2022-03-11	3.1.3	Fix: Smarty rendering oxmail <= 6.2

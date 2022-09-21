@@ -18,6 +18,7 @@ $aLang = [
     'PS_ARTICLEREQUEST_TAB_LINK_TITLE'    => "Verfügbarkeitsanfrage",
     'PS_ARTICLEREQUEST_WHEN_INFORM_TITLE' => "Gerne benachrichtigen wir Sie, sobald der Artikel wieder verfügbar ist. Bitte tragen Sie hierzu Ihre eMail-Adresse ein.",
     'PS_ARTICLEREQUEST_EMAIL'             => "eMail-Adresse",
+    'PS_ARTICLEREQUEST_VARIANT'          => "Variante wählen",
     'PS_ARTICLEREQUEST_VERIFICATIONCODE'  => "Sicherheitscode",
     'PS_ARTICLEREQUEST_SEND'              => "Absenden",
     'PS_ARTICLEREQUEST_SEND_SUBJECT'      => "Anfrage",
