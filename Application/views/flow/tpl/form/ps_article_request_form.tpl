@@ -1,5 +1,6 @@
 [{oxscript include="js/libs/jqBootstrapValidation.min.js" priority=10}]
 [{oxscript add="$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();"}]
+[{assign var=variants value=$oDetailsProduct->getFullVariants(false)}]
 
 <p>[{oxmultilang ident="PS_ARTICLEREQUEST_WHEN_INFORM_TITLE" }]</p>
 <form name="articlerequest" action="[{$oViewConf->getSelfActionLink() }]" method="post" class="psArticleRequest">
@@ -7,7 +8,7 @@
         [{$oViewConf->getHiddenSid() }]
         [{$oViewConf->getNavFormParams() }]
         <input type="hidden" name="cl" value="details">
-        [{if $oDetailsProduct}]
+        [{if $oDetailsProduct && $variants|@count == 0}]
             <input type="hidden" name="anid" value="[{$oDetailsProduct->oxarticles__oxid->value}]">
         [{/if}]
         <input type="hidden" name="fnc" value="request_product">
@@ -27,6 +28,25 @@
                 </div>
             </div>
         </div>
+        [{if $variants|@count}]
+        <div class="col-12">
+            <div class="form-group">
+                <div class="row">
+                    <label class="req col-12 col-xs-12 col-sm-4">[{oxmultilang ident="PS_ARTICLEREQUEST_VARIANT" }]:</label>
+                    <div class="col-12 col-xs-12 col-sm-8">
+                        <select class="form-control" required name="anid">
+                            [{foreach from=$variants item=variant}]
+                            [{if $variant->getStockStatus() == -1}]
+                                <option value="[{$variant->oxarticles__oxid->value}]">[{$variant->oxarticles__oxvarselect->value}]</option>
+                            [{/if}]
+                            [{/foreach}]
+                        </select>
+                        <div class="help-block"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        [{/if}]
 
         <div class="col-12">
             <div class="form-group">
