@@ -30,10 +30,10 @@ $aModule = [
         'en' => $psModuleDesc_en,
     ],
     'thumbnail'   => 'logo_pc-os.jpg',
-    'version'     => '3.1.6',
+    'version'     => '3.1.7',
     'author'      => 'ProudCommerce',
-    'url'         => 'http://www.proudcommerce.com',
-    'email'       => 'module@proudcommerce.com',
+    'url'         => 'https://github.com/proudcommerce/psArticleRequest',
+    'email'       => '',
     'controllers' => [
         'psarticlerequest_cron'             => \ProudCommerce\ArticleRequest\Application\Controller\Cron::class,
         'psarticlerequest_admin_main'       => \ProudCommerce\ArticleRequest\Application\Controller\Admin\ArticleRequest_Main::class,
