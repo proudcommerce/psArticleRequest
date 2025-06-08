@@ -19,14 +19,20 @@ Installation
 
 Notice
 
-	This module requires oxid captcha module (oxid-projects/captcha-module) and must
-	be acticated before using psArticleRequest. It´s required by composer.json.
+	CAPTCHA Support:
+	- Primary: This module will automatically use tabsl/tabslturnstile (Cloudflare Turnstile) if installed and active
+	- Uses TurnstileService for proper integration with token verification and remote IP validation
+	- Fallback: oxid-projects/captcha-module (required by composer.json) is used if Turnstile is not available
+	- Respects Turnstile module configuration (contact form settings)
+	
+	For Turnstile support, install: composer require tabsl/tabslturnstile
 	
 	The cronjob URL is: https://your-shop.com/?cl=psArticleRequest_cron&key=THE_KEY_FROM_MODULES_PSARTICLEREQUEST_SETTINGS
 	
 	
 Changelog
 	
+    2025-01-03: 3.1.7   Feature: Added support for tabsl/tabslturnstile as captcha alternative
     2022-21-09: 3.1.6   Feature: Let user select variant if is main product and has not on stock variants
     2022-07-28: 3.1.5   Feature: Allow using oxvarstock for product availability check
     2022-06-08	3.1.4   Fix: typo, registerdate format, mail problem > 6.2; Add: Delete button

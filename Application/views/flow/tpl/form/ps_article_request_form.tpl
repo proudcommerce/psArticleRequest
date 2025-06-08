@@ -1,6 +1,18 @@
 [{oxscript include="js/libs/jqBootstrapValidation.min.js" priority=10}]
 [{oxscript add="$('input,select,textarea').not('[type=submit]').jqBootstrapValidation();"}]
 [{assign var=variants value=$oDetailsProduct->getFullVariants(false)}]
+[{assign var="bShouldUseTurnstile" value=$oView->shouldUseTurnstile()}]
+
+[{if $bShouldUseTurnstile}]
+    [{oxscript include="https://challenges.cloudflare.com/turnstile/v0/api.js" priority=10}]
+    [{oxscript add="
+        function onTurnstileCallback(token) {
+            document.querySelector('input[name=\"cf-turnstile-response\"]').value = token;
+        }
+    "}]
+[{else}]
+    [{assign var="oCaptcha" value=$oView->getCaptcha() }]
+[{/if}]
 
 <p>[{oxmultilang ident="PS_ARTICLEREQUEST_WHEN_INFORM_TITLE" }]</p>
 <form name="articlerequest" action="[{$oViewConf->getSelfActionLink() }]" method="post" class="psArticleRequest">
@@ -12,8 +24,13 @@
             <input type="hidden" name="anid" value="[{$oDetailsProduct->oxarticles__oxid->value}]">
         [{/if}]
         <input type="hidden" name="fnc" value="request_product">
-        [{assign var="oCaptcha" value=$oView->getCaptcha() }]
-        <input type="hidden" name="c_mach" value="[{$oCaptcha->getHash()}]"/>
+        [{if $bShouldUseTurnstile}]
+            [{* Turnstile CAPTCHA *}]
+            <input type="hidden" name="cf-turnstile-response" value="">
+        [{else}]
+            [{* Standard OXID CAPTCHA *}]
+            <input type="hidden" name="c_mach" value="[{$oCaptcha->getHash()}]"/>
+        [{/if}]
     </div>
 
     <div class="row">
@@ -51,21 +68,29 @@
         <div class="col-12">
             <div class="form-group">
                 <div class="row">
-                    <label class="req col-12 col-xs-12 col-sm-4">[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]:</label>
-                    <div class="col-4 col-xs-4 col-sm-2 captchaCol">
-                        [{if $oCaptcha->isImageVisible()}]
-                            <img class="verificationCode" src="[{$oCaptcha->getImageUrl()}]" alt="[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]">
-                        [{else}]
-                            <span class="verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
-                        [{/if}]
-                    </div>
-                    <div class="col-8 col-xs-8 col-sm-6 inputCol">
-                        <div class="input-group">
-                            <br>
-                            <input class="js-oxValidate js-oxValidate_notEmpty form-control" required type="text" data-fieldsize="verify" name="c_mac" value="">
+                    [{if $bShouldUseTurnstile}]
+                        [{* Turnstile CAPTCHA *}]
+                        <div class="col-12">
+                            <div class="cf-turnstile" data-sitekey="[{$oView->getTurnstileSiteKey()}]" data-callback="onTurnstileCallback"></div>
                         </div>
-                        <div class="help-block"></div>
-                    </div>
+                    [{else}]
+                        [{* Standard OXID CAPTCHA *}]
+                        <label class="req col-12 col-xs-12 col-sm-4">[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]:</label>
+                        <div class="col-4 col-xs-4 col-sm-2 captchaCol">
+                            [{if $oCaptcha->isImageVisible()}]
+                                <img class="verificationCode" src="[{$oCaptcha->getImageUrl()}]" alt="[{oxmultilang ident="PS_ARTICLEREQUEST_VERIFICATIONCODE" }]">
+                            [{else}]
+                                <span class="verificationCode" id="verifyTextCode">[{$oCaptcha->getText()}]</span>
+                            [{/if}]
+                        </div>
+                        <div class="col-8 col-xs-8 col-sm-6 inputCol">
+                            <div class="input-group">
+                                <br>
+                                <input class="js-oxValidate js-oxValidate_notEmpty form-control" required type="text" data-fieldsize="verify" name="c_mac" value="">
+                            </div>
+                            <div class="help-block"></div>
+                        </div>
+                    [{/if}]
                 </div>
             </div>
         </div>

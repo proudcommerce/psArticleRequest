@@ -21,20 +21,78 @@ class ArticleDetailsController extends ArticleDetailsController_parent
     protected $_iArticleRequestStatus;
 
     /**
+     * Check if Turnstile module is available and active
+     * @return bool
+     */
+    protected function isTurnstileAvailable()
+    {
+        return class_exists('Tabsl\Turnstile\Service\TurnstileService');
+    }
+
+    /**
      * get captcha
-     * @return object|\oeCaptcha
+     * @return object|\oeCaptcha|null
      * @throws
      */
     public function getCaptcha()
     {
         if ($this->_oCaptcha === NULL) {
-            /** @var \oeCaptcha _oCaptcha */
-            $this->_oCaptcha = oxNew(\oeCaptcha::class);
+            if ($this->isTurnstileAvailable()) {
+                // Für Turnstile geben wir null zurück, da wir den Service direkt verwenden
+                $this->_oCaptcha = null;
+            } else {
+                // Fallback auf oxid-projects/captcha-module
+                /** @var \oeCaptcha _oCaptcha */
+                $this->_oCaptcha = oxNew(\oeCaptcha::class);
+            }
         }
 
         return $this->_oCaptcha;
     }
 
+    /**
+     * Check if we should use Turnstile for this form
+     * @return bool
+     */
+    protected function shouldUseTurnstile()
+    {
+        if (!$this->isTurnstileAvailable()) {
+            return false;
+        }
+        
+        try {
+            $turnstileService = new \Tabsl\Turnstile\Service\TurnstileService();
+            // Prüfe ob Turnstile generell aktiviert ist - da es keine spezifische Methode für Article Request gibt,
+            // verwenden wir eine allgemeine Prüfung
+            return method_exists($turnstileService, 'isEnabledForContact') ? $turnstileService->isEnabledForContact() : false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get Turnstile Site Key for template
+     * @return string
+     */
+    public function getTurnstileSiteKey()
+    {
+        if (!$this->shouldUseTurnstile()) {
+            return '';
+        }
+        
+        try {
+            $turnstileService = new \Tabsl\Turnstile\Service\TurnstileService();
+            if (method_exists($turnstileService, 'getSiteKey')) {
+                return $turnstileService->getSiteKey();
+            }
+        } catch (\Exception $e) {
+            // Fallback: versuche Site Key aus Config zu holen
+            $siteKey = Registry::getConfig()->getConfigParam('sTurnstileSiteKey');
+            return $siteKey ?: '';
+        }
+        
+        return '';
+    }
 
     /**
      * @throws \Exception
@@ -45,9 +103,35 @@ class ArticleDetailsController extends ArticleDetailsController_parent
         $myUtils  = Registry::getUtils();
 
         //control captcha
-        $oCaptcha = $this->getCaptcha();
-        if ( !$oCaptcha->passCaptcha() ) {
-            //Registry::get("oxUtilsView")->addErrorToDisplay('MESSAGE_WRONG_VERIFICATION_CODE');
+        $bCaptchaValid = false;
+        
+        if ($this->shouldUseTurnstile()) {
+            // Turnstile Validierung mit TurnstileService
+            try {
+                $turnstileService = new \Tabsl\Turnstile\Service\TurnstileService();
+                $turnstileToken = Registry::getRequest()->getRequestEscapedParameter('cf-turnstile-response');
+                $remoteIp = $_SERVER['REMOTE_ADDR'] ?? null;
+                
+                if ($turnstileToken && method_exists($turnstileService, 'verifyToken')) {
+                    $bCaptchaValid = $turnstileService->verifyToken($turnstileToken, $remoteIp);
+                }
+            } catch (\Exception $e) {
+                $bCaptchaValid = false;
+            }
+        } else {
+            // Standard OXID CAPTCHA Validierung
+            $oCaptcha = $this->getCaptcha();
+            if ($oCaptcha) {
+                $bCaptchaValid = $oCaptcha->passCaptcha();
+            }
+        }
+        
+        if (!$bCaptchaValid) {
+            if ($this->shouldUseTurnstile()) {
+                Registry::getUtilsView()->addErrorToDisplay('TURNSTILE_VERIFICATION_FAILED');
+            } else {
+                Registry::getUtilsView()->addErrorToDisplay('MESSAGE_WRONG_VERIFICATION_CODE');
+            }
             return false;
         }
 
