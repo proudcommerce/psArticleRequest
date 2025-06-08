@@ -4,12 +4,8 @@
 [{assign var="bShouldUseTurnstile" value=$oView->shouldUseTurnstile()}]
 
 [{if $bShouldUseTurnstile}]
-    [{oxscript include="https://challenges.cloudflare.com/turnstile/v0/api.js" priority=10}]
-    [{oxscript add="
-        function onTurnstileCallback(token) {
-            document.querySelector('input[name=\"cf-turnstile-response\"]').value = token;
-        }
-    "}]
+    <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
+    [{assign var="turnstileService" value=$oViewConf->getTurnstileService()}]
 [{else}]
     [{assign var="oCaptcha" value=$oView->getCaptcha() }]
 [{/if}]
@@ -26,7 +22,7 @@
         <input type="hidden" name="fnc" value="request_product">
         [{if $bShouldUseTurnstile}]
             [{* Turnstile CAPTCHA *}]
-            <input type="hidden" name="cf-turnstile-response" value="">
+            <div class="cf-turnstile" data-sitekey="[{$turnstileService->getSiteKey()}]" data-theme="[{$turnstileService->getTheme()}]" data-size="[{$turnstileService->getSize()}]"></div>
         [{else}]
             [{* Standard OXID CAPTCHA *}]
             <input type="hidden" name="c_mach" value="[{$oCaptcha->getHash()}]"/>
