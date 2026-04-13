@@ -9,6 +9,7 @@ namespace ProudCommerce\ArticleRequest\Application\Component\Widget;
 
 use OxidEsales\Eshop\Application\Model\Category;
 use OxidEsales\Eshop\Core\DatabaseProvider;
+use OxidEsales\Eshop\Core\Registry;
 
 class ArticleDetails extends ArticleDetails_parent
 {
@@ -16,6 +17,8 @@ class ArticleDetails extends ArticleDetails_parent
      * @var bool
      */
     protected $_blShowPsArticleRequest;
+
+    protected $_oCaptcha;
 
 
     /**
@@ -73,5 +76,72 @@ class ArticleDetails extends ArticleDetails_parent
         }
 
         return true;
+    }
+
+    /**
+     * Check if Turnstile module is available and active
+     * @return bool
+     */
+    protected function isTurnstileAvailable()
+    {
+        return class_exists('Tabsl\Turnstile\Service\TurnstileService');
+    }
+
+    /**
+     * Check if we should use Turnstile for this form
+     * @return bool
+     */
+    public function shouldUseTurnstile()
+    {
+        if (!$this->isTurnstileAvailable()) {
+            return false;
+        }
+
+        try {
+            $turnstileService = new \Tabsl\Turnstile\Service\TurnstileService();
+            return method_exists($turnstileService, 'isEnabledForContact') ? $turnstileService->isEnabledForContact() : false;
+        } catch (\Exception $e) {
+            return false;
+        }
+    }
+
+    /**
+     * Get Turnstile Site Key for template
+     * @return string
+     */
+    public function getTurnstileSiteKey()
+    {
+        if (!$this->shouldUseTurnstile()) {
+            return '';
+        }
+
+        try {
+            $turnstileService = new \Tabsl\Turnstile\Service\TurnstileService();
+            if (method_exists($turnstileService, 'getSiteKey')) {
+                return $turnstileService->getSiteKey();
+            }
+        } catch (\Exception $e) {
+            $siteKey = Registry::getConfig()->getConfigParam('sTurnstileSiteKey');
+            return $siteKey ?: '';
+        }
+
+        return '';
+    }
+
+    /**
+     * Get captcha
+     * @return object|\oeCaptcha|null
+     */
+    public function getCaptcha()
+    {
+        if ($this->_oCaptcha === null) {
+            if ($this->isTurnstileAvailable()) {
+                $this->_oCaptcha = null;
+            } else {
+                $this->_oCaptcha = oxNew(\oeCaptcha::class);
+            }
+        }
+
+        return $this->_oCaptcha;
     }
 }

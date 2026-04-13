@@ -54,7 +54,7 @@ class ArticleDetailsController extends ArticleDetailsController_parent
      * Check if we should use Turnstile for this form
      * @return bool
      */
-    protected function shouldUseTurnstile()
+    public function shouldUseTurnstile()
     {
         if (!$this->isTurnstileAvailable()) {
             return false;

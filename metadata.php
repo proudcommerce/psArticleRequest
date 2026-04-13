@@ -30,7 +30,7 @@ $aModule = [
         'en' => $psModuleDesc_en,
     ],
     'thumbnail'   => 'logo_pc-os.jpg',
-    'version'     => '3.1.7',
+    'version'     => '3.1.8',
     'author'      => 'ProudCommerce',
     'url'         => 'https://github.com/proudcommerce/psArticleRequest',
     'email'       => '',
